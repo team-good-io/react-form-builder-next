@@ -1,0 +1,17 @@
+/* OPEN FOR FURTHER IMPROVEMENT (CDD) */
+
+.signup-tpl__fields {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .signup-tpl__fields {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .signup-tpl__fields > [data-field-name="ID_DOCUMENT_TYPE"] {
+    grid-column: 1 / -1;
+  }
+}
