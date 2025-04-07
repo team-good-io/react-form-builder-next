@@ -5,7 +5,7 @@ import { EffectsConfig, EffectState } from "./types";
 import { createEffectsEngine } from "./engine/createEffectsEngine";
 import { useFormContext } from "react-hook-form";
 import { useOptionsContext } from "../Options";
-import { EffectsDevtoolsPanel } from "./engine/tools/EffectsDevToolsPanel";
+// import { EffectsDevtoolsPanel } from "./engine/tools/EffectsDevToolsPanel";
 
 interface EffectsProviderProps {
   config: EffectsConfig;
@@ -38,7 +38,7 @@ export function EffectsProvider({ config, children }: EffectsProviderProps) {
   return (
     <EffectsContext.Provider value={contextValue}>
       {children}
-      <EffectsDevtoolsPanel subscribe={engine.onDevtoolsEvent} />
+      {/* <EffectsDevtoolsPanel subscribe={engine.onDevtoolsEvent} /> */}
     </EffectsContext.Provider>
   )
 }

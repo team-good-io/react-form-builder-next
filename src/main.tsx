@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 
 import { Form } from './solution/Form.tsx'
 
-import { config } from './configs/demo-effects-cascading.ts'
+import { config } from './configs/demo-effects-document.ts'
 
 import './index.css'
 

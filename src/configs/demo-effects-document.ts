@@ -34,6 +34,10 @@ export const config: FormConfig = {
         { label: "Peru", value: "PE" },
         { label: "Colombia", value: "CO" }
       ]
+    },
+    {
+      name: 'CE_EXPIRY',
+      type: 'text',
     }
   ],
   defaultValues: {
@@ -89,6 +93,32 @@ export const config: FormConfig = {
           value: {
             disabled: false
           }
+        }
+      ]
+    },
+    {
+      when: {
+        field: 'ID_DOCUMENT_TYPE',
+        operator: '===',
+        value: 'CE'
+      },
+      actions: [
+        {
+          type: 'hideField',
+          target: 'CE_EXPIRY'
+        }
+      ]
+    },
+    {
+      when: {
+        field: 'ID_DOCUMENT_TYPE',
+        operator: '!==',
+        value: 'CE'
+      },
+      actions: [
+        {
+          type: 'showField',
+          target: 'CE_EXPIRY'
         }
       ]
     }

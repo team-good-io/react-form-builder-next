@@ -20,7 +20,6 @@ export function Field({
   const { register, formState: { errors } } = useFormContext();
   const fieldOptions = useFieldOptions(name);
   const fieldEffects = useFieldEffects(name);
-  console.log(name, fieldEffects)
 
   const options = fieldEffects.options?.data || [...baseOptions, ...(fieldOptions.data || [])];
   const fieldProps = { ...baseFieldProps, ...(fieldEffects.fieldProps || {}) }
@@ -33,7 +32,12 @@ export function Field({
   const errorType = getFieldErrorType(error);
 
   const FieldComponent = fieldMap[type] || fieldMap.text;
-  
+
+  // temp
+  if(!inputProps.visible === false) {
+    return <input {...inputProps} type="hidden" />
+  }
+
   return (
     <Suspense fallback={null}>
       <FieldComponent {...inputProps} error={errorType} />
