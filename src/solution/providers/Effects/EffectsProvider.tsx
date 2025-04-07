@@ -13,10 +13,10 @@ interface EffectsProviderProps {
 }
 
 export function EffectsProvider({ config, children }: EffectsProviderProps) {
-  const { watch, ...formCtx } = useFormContext();
+  const { watch, ...methods } = useFormContext();
   const { getValues: getOptions } = useOptionsContext();
   const { publish, subscribe } = useMemo(() => createPubSub<EffectState>(), []);
-  const toolbox = useMemo(() => ({ ...formCtx, publish, getOptions }), [formCtx, getOptions, publish]);
+  const toolbox = useMemo(() => ({ ...methods, publish, getOptions }), [methods, getOptions, publish]);
   const engine = useMemo(() => createEffectsEngine(config, toolbox), [config, toolbox]);
   const dependencies = useMemo(() => engine.getDependencies(), [engine]);
 
@@ -33,10 +33,10 @@ export function EffectsProvider({ config, children }: EffectsProviderProps) {
     return () => unsubscribe();
   }, [watch, dependencies, engine]);
 
-  const ctxValue = useMemo(() => ({subscribe}), [subscribe])
+  const contextValue = useMemo(() => ({subscribe}), [subscribe])
 
   return (
-    <EffectsContext.Provider value={ctxValue}>
+    <EffectsContext.Provider value={contextValue}>
       {children}
       <EffectsDevtoolsPanel subscribe={engine.onDevtoolsEvent} />
     </EffectsContext.Provider>
