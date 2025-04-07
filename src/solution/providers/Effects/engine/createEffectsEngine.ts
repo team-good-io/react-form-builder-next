@@ -41,8 +41,8 @@ export function createEffectsEngine(
     clearErrors: (action) => toolbox.clearErrors(action.target),
     setFieldProps: (action) => toolbox.publish(action.target, { fieldProps: action.value }),
     setValidation: (action) => toolbox.publish(action.target, { registerProps: action.schema }),
-    showField: (action) => toolbox.publish(action.target, { fieldProps: { visible: true} }),
-    hideField: (action) => toolbox.publish(action.target, { fieldProps: { visible: false} }),
+    showField: (action) => toolbox.publish(action.target, { fieldProps: { hidden: false} }),
+    hideField: (action) => toolbox.publish(action.target, { fieldProps: { hidden: true} }),
     deduplicateOptions: (action) => deduplicateOptions(action, toolbox),
   };
 

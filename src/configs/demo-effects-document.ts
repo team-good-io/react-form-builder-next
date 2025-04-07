@@ -104,7 +104,7 @@ export const config: FormConfig = {
       },
       actions: [
         {
-          type: 'hideField',
+          type: 'showField',
           target: 'CE_EXPIRY'
         }
       ]
@@ -117,7 +117,7 @@ export const config: FormConfig = {
       },
       actions: [
         {
-          type: 'showField',
+          type: 'hideField',
           target: 'CE_EXPIRY'
         }
       ]

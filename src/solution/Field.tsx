@@ -34,7 +34,7 @@ export function Field({
   const FieldComponent = fieldMap[type] || fieldMap.text;
 
   // temp
-  if(!inputProps.visible === false) {
+  if(inputProps.hidden) {
     return <input {...inputProps} type="hidden" />
   }
 
