@@ -20,6 +20,7 @@ export function Field({
   const { register, formState: { errors } } = useFormContext();
   const fieldOptions = useFieldOptions(name);
   const fieldEffects = useFieldEffects(name);
+  console.log(name, fieldEffects)
 
   const options = fieldEffects.options?.data || [...baseOptions, ...(fieldOptions.data || [])];
   const fieldProps = { ...baseFieldProps, ...(fieldEffects.fieldProps || {}) }
