@@ -1,3 +1,4 @@
+import { debounce } from "../../../utils";
 import { ValidationFactory, ValidationFn, ValidationRuleConfig } from "../types"
 
 interface ValidationToolbox {
@@ -9,6 +10,27 @@ export function createValidationEngine(
 ) {
   const validationRegistry: Record<string, ValidationFactory> = {
     email: () => (value: unknown) => typeof value === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
+    emailAvailability: () => {
+      const checkEmail = async (value: unknown): Promise<boolean> => {
+        const email = value as string;
+        if (typeof email !== 'string') {
+          console.warn("Invalid email format");
+          return false;
+        }
+
+        try {
+          // Simulate an API call to check email availability
+          const response = await fetch('/api/check-email.json')
+          const data = await response.json()
+          return data?.isAvailable ?? false;
+        } catch (e) {
+          console.error("Error checking email availability", e);
+          return false;
+        }
+      }
+
+      return debounce(checkEmail, 500);
+    },
     matchValue: (params: Record<string, unknown>) => (value: unknown) => {
       const fieldName = params.name as string;
       if (typeof fieldName !== 'string') {
@@ -65,15 +87,15 @@ export function createValidationEngine(
         return !value.includes(fieldValue);
       });
     },
-    pattern: (params: Record<string, unknown>) =>  {
+    pattern: (params: Record<string, unknown>) => {
       const patternString = params.pattern as string;
       if (typeof patternString !== 'string') {
         console.warn("Invalid parameter: 'pattern' must be a string");
       }
-    
+
       // Build the RegExp from string
       const regex = new RegExp(patternString);
-    
+
       return (value: unknown) => {
         if (typeof value !== 'string') {
           return false;

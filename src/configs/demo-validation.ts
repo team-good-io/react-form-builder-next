@@ -17,7 +17,7 @@ export const config: FormConfig = {
       type: "text",
       registerProps: {
         required: true,
-        validate: ["email"],
+        validate: ["email", "emailAvailability"],
       }
     },
     {
@@ -32,7 +32,7 @@ export const config: FormConfig = {
           { fn: 'range', params: { min: 8, max: 64 } },
           'oneNumber',
           'oneLetter',
-          { fn: 'notContainValue', params: { fields: ["USERNAME", "EMAIL"]}}
+          { fn: 'notContainValue', params: { fields: ["USERNAME", "EMAIL"] } }
         ],
       }
     },
@@ -41,7 +41,7 @@ export const config: FormConfig = {
       type: "password",
       registerProps: {
         required: true,
-        validate: [{fn: 'matchValue', params: { name: "PASSWORD" }}],
+        validate: [{ fn: 'matchValue', params: { name: "PASSWORD" } }],
       }
     },
     {
@@ -75,7 +75,7 @@ export const config: FormConfig = {
           type: 'setRegisterProps',
           target: 'ID_DOCUMENT_NUMBER',
           value: {
-            validate: [{fn: 'pattern', params: { pattern: '^[0-9]{8}$' }}]
+            validate: [{ fn: 'pattern', params: { pattern: '^[0-9]{8}$' } }]
           }
         }
       ]
@@ -92,7 +92,7 @@ export const config: FormConfig = {
           target: 'ID_DOCUMENT_NUMBER',
           value: {
             validate: [
-              {fn: 'pattern', params: { pattern: '^[a-zA-Z0-9]{9,12}$' }},
+              { fn: 'pattern', params: { pattern: '^[a-zA-Z0-9]{9,12}$' } },
             ]
           }
         }
