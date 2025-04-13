@@ -52,9 +52,9 @@ export const config: FormConfig = {
       },
       actions: [
         {
-          type: 'setValidation',
+          type: 'setRegisterProps',
           target: 'ID_DOCUMENT_NUMBER',
-          schema: {
+          value: {
             minLength: 8
           }
         },
@@ -81,9 +81,9 @@ export const config: FormConfig = {
       },
       actions: [
         {
-          type: 'setValidation',
+          type: 'setRegisterProps',
           target: 'ID_DOCUMENT_NUMBER',
-          schema: {
+          value: {
             minLength: 10
           }
         },

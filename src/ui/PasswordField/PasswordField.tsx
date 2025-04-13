@@ -10,7 +10,6 @@ function PasswordField(
   forwardRef: React.ForwardedRef<HTMLInputElement>
 ) {
   const { error, ...inputProps } = props;
-  console.log(props);
 
   return (
     <Field id={inputProps.id} name={inputProps.name} error={error}>

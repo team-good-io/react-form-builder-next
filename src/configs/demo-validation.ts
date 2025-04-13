@@ -9,8 +9,7 @@ export const config: FormConfig = {
       registerProps: {
         minLength: 3,
         maxLength: 20,
-        required: true,
-        validate: []
+        required: true
       }
     },
     {
@@ -31,8 +30,8 @@ export const config: FormConfig = {
         required: true,
         validate: [
           { fn: 'range', params: { min: 8, max: 64 } },
-          { fn: 'oneNumber' },
-          { fn: 'oneLetter' },
+          'oneNumber',
+          'oneLetter',
           { fn: 'notContainValue', params: { fields: ["USERNAME", "EMAIL"]}}
         ],
       }
@@ -44,6 +43,60 @@ export const config: FormConfig = {
         required: true,
         validate: [{fn: 'matchValue', params: { name: "PASSWORD" }}],
       }
+    },
+    {
+      name: "ID_DOCUMENT_TYPE",
+      type: "radio",
+      options: [
+        { label: "DNI", value: "DNI" },
+        { label: "CE", value: "CE" }
+      ]
+    },
+    {
+      name: "ID_DOCUMENT_NUMBER",
+      type: "text",
+      registerProps: {
+        required: true
+      }
+    }
+  ],
+  defaultValues: {
+    ID_DOCUMENT_TYPE: "DNI"
+  },
+  effectsConfig: [
+    {
+      when: {
+        field: 'ID_DOCUMENT_TYPE',
+        operator: '===',
+        value: 'DNI'
+      },
+      actions: [
+        {
+          type: 'setRegisterProps',
+          target: 'ID_DOCUMENT_NUMBER',
+          value: {
+            validate: [{fn: 'pattern', params: { pattern: '^[0-9]{8}$' }}]
+          }
+        }
+      ]
+    },
+    {
+      when: {
+        field: 'ID_DOCUMENT_TYPE',
+        operator: '===',
+        value: 'CE'
+      },
+      actions: [
+        {
+          type: 'setRegisterProps',
+          target: 'ID_DOCUMENT_NUMBER',
+          value: {
+            validate: [
+              {fn: 'pattern', params: { pattern: '^[a-zA-Z0-9]{9,12}$' }},
+            ]
+          }
+        }
+      ]
     }
   ]
 }

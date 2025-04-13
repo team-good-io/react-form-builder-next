@@ -1,10 +1,10 @@
 import { useEffect, useMemo } from "react";
-import createPubSub from "../../services/pubSub/createPubSub";
 import { EffectsContext } from "./EffectsContext";
 import { EffectsConfig, EffectState } from "./types";
 import { createEffectsEngine } from "./engine/createEffectsEngine";
 import { useFormContext } from "react-hook-form";
 import { useOptionsContext } from "../Options";
+import { createPubSubWithState } from "../../services/pubSub/createPubSubWithState";
 // import { EffectsDevtoolsPanel } from "./engine/tools/EffectsDevToolsPanel";
 
 interface EffectsProviderProps {
@@ -15,8 +15,8 @@ interface EffectsProviderProps {
 export function EffectsProvider({ config, children }: EffectsProviderProps) {
   const { watch, ...methods } = useFormContext();
   const { getSnapshot: getOptions } = useOptionsContext();
-  const { publish, subscribe } = useMemo(() => createPubSub<EffectState>(), []);
-  const toolbox = useMemo(() => ({ ...methods, publish, getOptions }), [methods, getOptions, publish]);
+  const { publish, merge, subscribe } = useMemo(() => createPubSubWithState<EffectState>(new Map()), []);
+  const toolbox = useMemo(() => ({ ...methods, publish, merge, getOptions }), [methods, getOptions, publish, merge]);
   const engine = useMemo(() => createEffectsEngine(config, toolbox), [config, toolbox]);
   const dependencies = useMemo(() => engine.getDependencies(), [engine]);
 

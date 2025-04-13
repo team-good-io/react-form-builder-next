@@ -12,7 +12,8 @@ export function createValidationEngine(
     matchValue: (params: Record<string, unknown>) => (value: unknown) => {
       const fieldName = params.name as string;
       if (typeof fieldName !== 'string') {
-        throw new Error("Invalid parameter: 'name' must be a string");
+        console.warn("Invalid parameter: 'name' must be a string");
+        return true;
       }
       const fieldValue = toolbox.getValues()[fieldName];
       return value === fieldValue;
@@ -20,7 +21,8 @@ export function createValidationEngine(
     range: (params: Record<string, unknown>) => (value: unknown) => {
       const { min, max } = params;
       if (typeof min !== 'number' || typeof max !== 'number') {
-        throw new Error("Invalid parameters: 'min' and 'max' must be numbers");
+        console.warn("Invalid parameters: 'min' and 'max' must be numbers");
+        return true;
       }
       if (typeof value === 'string') {
         return value.length >= min && value.length <= max;
@@ -49,7 +51,8 @@ export function createValidationEngine(
 
       const { fields } = params;
       if (!Array.isArray(fields)) {
-        throw new Error("Invalid parameter: 'fields' must be an array");
+        console.warn("Invalid parameter: 'fields' must be an array");
+        return true;
       }
 
       const formValues = toolbox.getValues();
@@ -62,7 +65,22 @@ export function createValidationEngine(
         return !value.includes(fieldValue);
       });
     },
-
+    pattern: (params: Record<string, unknown>) =>  {
+      const patternString = params.pattern as string;
+      if (typeof patternString !== 'string') {
+        console.warn("Invalid parameter: 'pattern' must be a string");
+      }
+    
+      // Build the RegExp from string
+      const regex = new RegExp(patternString);
+    
+      return (value: unknown) => {
+        if (typeof value !== 'string') {
+          return false;
+        }
+        return regex.test(value);
+      };
+    },
   }
 
   const compileValidations = (rules: ValidationRuleConfig[]) => {

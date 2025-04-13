@@ -8,6 +8,7 @@ export interface CreatePubSubStateProps<TValue = unknown> {
   publish: (name: string, payload: TValue) => void;
   getSnapshot: () => Map<string, TValue>;
   get: (name: string) => TValue | undefined;
+  merge: (name: string, payload: Partial<TValue>) => void;
 }
 
 export const createPubSubState = <TValue = unknown>(
@@ -32,9 +33,14 @@ export const createPubSubState = <TValue = unknown>(
 
   const merge = (name: string, payload: Partial<TValue>): void => {
     const current = state.get(name);
+    if(!current) {
+      publish(name, payload as TValue);
+      return;
+    }
     if (current) {
       const merged = deepMerge( current, payload);
       state.set(name, merged as TValue);
+      console.log(name, merged);
       pubsub.publish(name, merged as TValue);
     }
   };

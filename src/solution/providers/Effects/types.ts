@@ -39,7 +39,7 @@ export type EffectCondition = SimpleCondition | CompositeCondition;
 
 export type EffectAction =
   | { type: 'setValue'; target: string; value: unknown; runOnInit?: boolean }
-  | { type: 'setValidation'; target: string; schema: Record<string, unknown> }
+  | { type: 'setRegisterProps'; target: string; value: Record<string, unknown> }
   | { type: 'resetField'; target: string; runOnInit?: boolean }
   | { type: 'showField'; target: string }
   | { type: 'hideField'; target: string }
