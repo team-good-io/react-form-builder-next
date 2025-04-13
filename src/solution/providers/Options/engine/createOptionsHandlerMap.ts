@@ -1,12 +1,12 @@
 import { interpolateUrl } from '../../../services/httpClient/utils/interpolateUrl';
-import { CreatePubSubCacheProps } from '../../../services/pubSub/createPubSubWithCache';
+import { CreatePubSubStateProps } from '../../../services/pubSub/createPubSubWithState';
 import { OptionsSourceType, type OptionsConfig, type OptionsState } from '../types';
 
 import { fetchOptionsFromRemote } from './utils/fetchRemoteOptions';
 
 export function createOptionsHandlerMap(
   config: OptionsConfig,
-  pubsub: CreatePubSubCacheProps<OptionsState>,
+  pubsub: CreatePubSubStateProps<OptionsState>,
 ): Record<OptionsSourceType, (
   sourceName: string, formValues?: Record<string, unknown>
 ) => void | Promise<void>> {

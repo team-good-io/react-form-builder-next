@@ -1,5 +1,5 @@
 
-import { CreatePubSubCacheProps } from '../../../services/pubSub/createPubSubWithCache';
+import { CreatePubSubStateProps } from '../../../services/pubSub/createPubSubWithState';
 import type { OptionsConfig, OptionsState } from '../types';
 import { OptionsSourceType } from '../types';
 import { createOptionsHandlerMap } from './createOptionsHandlerMap';
@@ -12,7 +12,7 @@ interface OptionEngineReturns {
 
 export function createOptionsEngine(
   config: OptionsConfig,
-  pubsub: CreatePubSubCacheProps<OptionsState>,
+  pubsub: CreatePubSubStateProps<OptionsState>,
 ): OptionEngineReturns {
   const handlers = createOptionsHandlerMap(config, pubsub);
 

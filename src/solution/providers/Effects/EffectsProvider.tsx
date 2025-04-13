@@ -14,7 +14,7 @@ interface EffectsProviderProps {
 
 export function EffectsProvider({ config, children }: EffectsProviderProps) {
   const { watch, ...methods } = useFormContext();
-  const { getValues: getOptions } = useOptionsContext();
+  const { getSnapshot: getOptions } = useOptionsContext();
   const { publish, subscribe } = useMemo(() => createPubSub<EffectState>(), []);
   const toolbox = useMemo(() => ({ ...methods, publish, getOptions }), [methods, getOptions, publish]);
   const engine = useMemo(() => createEffectsEngine(config, toolbox), [config, toolbox]);

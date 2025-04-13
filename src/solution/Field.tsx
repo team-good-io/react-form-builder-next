@@ -1,13 +1,15 @@
 import { Suspense, ComponentType, lazy } from "react";
 import { useFormContext } from "react-hook-form";
-import { useFieldEffects, useFieldOptions } from "./providers";
+import { useFieldEffects, useFieldOptions, useValidation } from "./providers";
 import { FieldConfig } from "./types";
 import { getFieldErrorType } from "./utils";
+import { ValidationCheckList } from "./components/ValidationCheckList";
 
 const fieldMap: Record<string, ComponentType<FieldConfig>> = {
   select: lazy(() => import('../ui/SelectField/SelectField')),
   radio: lazy(() => import('../ui/RadioField/RadioField')),
   text: lazy(() => import('../ui/TextField/TextField')),
+  password: lazy(() => import('../ui/PasswordField/PasswordField')),
 };
 
 export function Field({
@@ -25,8 +27,10 @@ export function Field({
   const fieldProps = { ...baseFieldProps, ...(fieldEffects.fieldProps || {}) }
   const registerProps = { ...baseRegisterProps, ...(fieldEffects.registerProps || {}) }
 
-  const field = register(name, registerProps);
-  const inputProps = {...fieldProps, ...field, id: name, options, type }
+  const validate = useValidation(Array.isArray(registerProps.validate) ? registerProps.validate : []);
+
+  const field = register(name, { ...registerProps, validate });
+  const inputProps = { ...fieldProps, ...field, id: name, options, type }
 
   const error = errors[name];
   const errorType = getFieldErrorType(error);
@@ -34,8 +38,19 @@ export function Field({
   const FieldComponent = fieldMap[type] || fieldMap.text;
 
   // temp
-  if(inputProps.hidden) {
+  if (inputProps.hidden) {
     return <input {...inputProps} type="hidden" />
+  }
+
+  if(type === 'password' && fieldProps.showValidationCheckList) {
+    return (
+      <Suspense fallback={null}>
+        <div>
+          <FieldComponent {...inputProps} error={errorType} />
+          <ValidationCheckList name={name} validate={validate} />
+        </div>
+      </Suspense>
+    )
   }
 
   return (

@@ -73,5 +73,6 @@ export interface EffectsToolbox {
   resetField: (name: string) => void;
   clearErrors: (name: string) => void;
   publish: (name: string, state: EffectState) => void;
+  merge: (name: string, state: EffectState) => void;
   // Future: add showField / hideField hooks here for full future-proofing
 }

@@ -1,6 +1,7 @@
 import { OptionsConfig } from "./providers/Options/types";
 import { EffectsConfig } from "./providers/Effects/types";
 import { templateMap } from "./templates";
+import { ValidationConfig } from "./providers";
 
 export interface Option<T = unknown> {
   label: string;
@@ -23,6 +24,7 @@ export type FormConfig = {
   defaultValues?: Record<string, unknown>;
   optionsConfig?: OptionsConfig;
   effectsConfig?: EffectsConfig;
+  validationConfig?: ValidationConfig;
   onValid?(values?: Record<string, unknown>): void;
   onInvalid?(): void;
 }

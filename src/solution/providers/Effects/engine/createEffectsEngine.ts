@@ -39,10 +39,10 @@ export function createEffectsEngine(
     setValue: (action) => toolbox.setValue(action.target, action.value),
     resetField: (action) => toolbox.resetField(action.target),
     clearErrors: (action) => toolbox.clearErrors(action.target),
-    setFieldProps: (action) => toolbox.publish(action.target, { fieldProps: action.value }),
-    setValidation: (action) => toolbox.publish(action.target, { registerProps: action.schema }),
-    showField: (action) => toolbox.publish(action.target, { fieldProps: { hidden: false} }),
-    hideField: (action) => toolbox.publish(action.target, { fieldProps: { hidden: true} }),
+    setFieldProps: (action) => toolbox.merge(action.target, { fieldProps: action.value }),
+    setValidation: (action) => toolbox.merge(action.target, { registerProps: action.schema }),
+    showField: (action) => toolbox.merge(action.target, { fieldProps: { hidden: false} }),
+    hideField: (action) => toolbox.merge(action.target, { fieldProps: { hidden: true} }),
     deduplicateOptions: (action) => deduplicateOptions(action, toolbox),
   };
 
