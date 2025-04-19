@@ -107,22 +107,13 @@ export function createValidationEngine(
 
   const compileValidations = (rules: ValidationRuleConfig[]) => {
     const result: Record<string, ValidationFn> = {};
-
-    rules.forEach((rule) => {
-      if (typeof rule === 'string') {
-        const validationFn = validationRegistry[rule];
-        if (validationFn) {
-          result[rule] = validationFn({});
-        } else {
-          console.warn(`Unknown validate function: ${rule}`);
-        }
-      } else if (typeof rule === 'object' && rule.fn) {
-        const validationFn = validationRegistry[rule.fn];
-        if (validationFn) {
-          result[rule.fn] = validationFn(rule.params);
-        } else {
-          console.warn(`Unknown validate function: ${rule.fn}`);
-        }
+    console.log(rules);
+    rules.forEach(([fn, params = {}]) => {
+      const validationFn = validationRegistry[fn];
+      if (validationFn) {
+        result[fn] = validationFn(params);
+      } else {
+        console.warn(`Unknown validate function: ${fn}`);
       }
     });
 

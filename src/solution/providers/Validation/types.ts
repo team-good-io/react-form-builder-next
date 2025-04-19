@@ -1,4 +1,4 @@
-export type ValidationRuleConfig = string | { fn: string, params: Record<string, unknown> };
+export type ValidationRuleConfig = [fn: string] | [fn: string, params: Record<string, unknown>];
 
 export type ValidationConfig = Record<string, ValidationRuleConfig[]>;
 

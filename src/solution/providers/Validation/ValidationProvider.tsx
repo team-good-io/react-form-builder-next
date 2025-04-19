@@ -16,6 +16,6 @@ export const ValidationProvider = ({ children}: ValidationProviderProps): JSX.El
   return (
     <ValidationContext.Provider value={validation}>
       {children}
-      </ValidationContext.Provider>
+    </ValidationContext.Provider>
   )
 }
