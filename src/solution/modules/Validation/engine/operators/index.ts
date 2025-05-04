@@ -8,8 +8,7 @@ import { oneNumber } from "./oneNumber";
 import { pattern } from "./pattern";
 import { range } from "./range";
 
-const simple = (fn: (value: unknown) => boolean | string): ValidationFactoryFn =>
-  () => fn;
+const simple = (fn: (value: unknown) => boolean | string): ValidationFactoryFn => () => fn;
 
 export const operators: Record<string, ValidationFactoryFn> = {
   email: simple(email),

@@ -6,7 +6,7 @@ import { getFieldErrorType } from "./utils";
 import { ValidationCheckList } from "./components/ValidationCheckList";
 import { useValidation } from "./modules/Validation";
 
-const fieldMap: Record<string, ComponentType<FieldConfig>> = {
+const fieldMap: Record<string, ComponentType<FieldConfig & {error?: string}>> = {
   select: lazy(() => import('../ui/SelectField/SelectField')),
   radio: lazy(() => import('../ui/RadioField/RadioField')),
   text: lazy(() => import('../ui/TextField/TextField')),
