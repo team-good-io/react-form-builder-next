@@ -79,7 +79,6 @@ export function MultiForm({
       defaultValues={values}
       optionsConfig={activeStep.optionsConfig}
       effectsConfig={activeStep.effectsConfig}
-      validationConfig={activeStep.validationConfig}
       onValid={handleNextStep}
       template={stepTemplate}
       fields={activeStep.fields}

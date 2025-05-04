@@ -22,6 +22,9 @@ export const config: MultiFormProps = {
         {
           name: "EMAIL",
           type: "text",
+          registerProps: {
+            validate: [['email'], ['availability', { type: 'email'}]]
+          }
         },
         {
           name: "PASSWORD",

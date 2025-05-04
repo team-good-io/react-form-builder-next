@@ -1,7 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
-import { Form } from './solution/Form.tsx'
+// import { Form } from './solution/Form.tsx'
 
 // import { config } from './configs/demo-validation.ts'
 import { config } from './configs/demo-multiform.ts'

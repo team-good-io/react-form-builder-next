@@ -1,8 +1,9 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { FormConfig } from "./types";
 import { Field } from "./Field";
-import { OptionsProvider, EffectsProvider, ValidationProvider } from "./providers";
+import { OptionsProvider, EffectsProvider } from "./providers";
 import { templateMap } from "./templates";
+import { ValidationProvider } from "./modules/Validation";
 
 export function Form({
   template,
@@ -10,7 +11,6 @@ export function Form({
   defaultValues = {},
   optionsConfig = {},
   effectsConfig = [],
-  validationConfig = {},
   onValid = () => {},
   onInvalid = () => {},
 }: FormConfig) {
@@ -21,7 +21,7 @@ export function Form({
     <FormProvider {...instance}>
       <OptionsProvider config={optionsConfig}>
           <EffectsProvider config={effectsConfig}>
-            <ValidationProvider config={validationConfig}>
+            <ValidationProvider>
               <form onSubmit={instance.handleSubmit(onValid, onInvalid)}>
                 <Template meta={template.params}>
                   {fields.map((field) => (

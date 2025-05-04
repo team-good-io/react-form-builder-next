@@ -4,9 +4,9 @@ import { useValidationContext } from "./useValidationContext";
 
 export function useValidation(rules: ValidationRuleConfig[]) {
   const context = useValidationContext();
-  const { compileValidations } = context;
+  const { compile } = context;
 
-  const compiledValidations = useMemo(() => compileValidations(rules), [compileValidations, rules]);
+  const compiledValidations = useMemo(() => compile(rules), [compile, rules]);
 
   return compiledValidations;
 }

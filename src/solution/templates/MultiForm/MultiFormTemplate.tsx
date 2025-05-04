@@ -9,7 +9,6 @@ export function MultiFormTemplate({ children, meta }: MultiFormTemplateProps) {
   const isLastStep = meta?.isLastStep;
   const onPrevStep = meta?.onPrevStep as () => void;
 
-  console.log(onPrevStep)
   return (
     <div className="multiform-tpl">
       <div className="signup-tpl__fields">
