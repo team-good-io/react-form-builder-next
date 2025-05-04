@@ -8,7 +8,7 @@ interface RadioFieldProps {
 
 function RadioField(
   props: RadioFieldProps & React.InputHTMLAttributes<HTMLInputElement>,
-  forwardRef: React.ForwardedRef<HTMLInputElement>
+  ref: React.ForwardedRef<HTMLInputElement>
 ): React.ReactNode {
   const { error, options, ...inputProps } = props;
   return (
@@ -20,7 +20,7 @@ function RadioField(
             value={value.toString()}
             {...inputProps}
             id={`${inputProps.id}_${value}`}
-            ref={forwardRef}
+            ref={ref}
           />
           {label}
         </label>

@@ -18,7 +18,7 @@ export interface FieldConfig {
 }
 
 export type FormConfig = {
-  template: keyof typeof templateMap;
+  template: { name: keyof typeof templateMap, params?: Record<string, unknown> };
   meta?: Record<string, unknown>;
   fields: FieldConfig[];
   defaultValues?: Record<string, unknown>;

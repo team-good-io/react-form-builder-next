@@ -8,13 +8,13 @@ interface SelectFieldProps {
 
 function SelectField(
   props: SelectFieldProps & React.SelectHTMLAttributes<HTMLSelectElement>,
-  forwardRef: React.ForwardedRef<HTMLSelectElement>
+  ref: React.ForwardedRef<HTMLSelectElement>
 ): JSX.Element {
   const { error, options, ...selectProps } = props;
 
   return (
     <Field id={selectProps.id} name={selectProps.name} error={error}>
-      <select {...selectProps} ref={forwardRef}>
+      <select {...selectProps} ref={ref}>
         <option></option>
         {options?.map(({ label, value }) => (
           <option key={value.toString()} value={value.toString()}>

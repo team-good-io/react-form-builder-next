@@ -6,7 +6,6 @@ import { templateMap } from "./templates";
 
 export function Form({
   template,
-  meta,
   fields,
   defaultValues = {},
   optionsConfig = {},
@@ -16,7 +15,7 @@ export function Form({
   onInvalid = () => {},
 }: FormConfig) {
   const instance = useForm({ defaultValues });
-  const Template = templateMap[template];
+  const Template = templateMap[template.name];
 
   return (
     <FormProvider {...instance}>
@@ -24,7 +23,7 @@ export function Form({
           <EffectsProvider config={effectsConfig}>
             <ValidationProvider config={validationConfig}>
               <form onSubmit={instance.handleSubmit(onValid, onInvalid)}>
-                <Template meta={meta}>
+                <Template meta={template.params}>
                   {fields.map((field) => (
                     <Field key={field.name} {...field} />
                   ))}

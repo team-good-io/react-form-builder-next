@@ -7,12 +7,12 @@ interface TextFieldProps {
 
 const TextField = (
   props: TextFieldProps & React.InputHTMLAttributes<HTMLInputElement>,
-  forwardRef: React.ForwardedRef<HTMLInputElement>
+  ref: React.ForwardedRef<HTMLInputElement>
 ) => {
   const { error, ...inputProps } = props;
   return (
     <Field id={props.id} name={inputProps.name} error={error}>
-      <input {...inputProps} ref={forwardRef} />
+      <input {...inputProps} ref={ref} />
     </Field>
   )
 }

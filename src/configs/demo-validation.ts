@@ -1,7 +1,7 @@
 import { FormConfig } from "../solution/types";
 
 export const config: FormConfig = {
-  template: "signup",
+  template: {name: "signup"},
   fields: [
     {
       name: "USERNAME",

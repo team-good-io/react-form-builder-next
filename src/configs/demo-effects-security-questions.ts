@@ -2,7 +2,7 @@ import { OptionsSourceType } from "../solution/providers/Options/types";
 import { FormConfig } from "../solution/types";
 
 export const config: FormConfig = {
-  template: "signup",
+  template: {name: "signup"},
   fields: [
     {
       name: "SECURITY_QUESTION_1",
