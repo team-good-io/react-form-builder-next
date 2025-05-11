@@ -1,4 +1,5 @@
-import { OptionsSourceType } from "../solution/providers/Options/types";
+
+import { OptionsSourceType } from "../solution/modules/Options/types";
 import { FormConfig } from "../solution/types";
 
 export const config: FormConfig = {

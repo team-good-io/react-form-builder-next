@@ -1,10 +1,8 @@
 
-import { CreatePubSubStateProps } from '../../../services/pubSub/createPubSubWithState';
-import type { OptionsConfig, OptionsState } from '../types';
-import { OptionsSourceType } from '../types';
-import { createOptionsHandlerMap } from './createOptionsHandlerMap';
+import { OptionsConfig, OptionsFn, OptionsSourceType } from "../types";
 
-interface OptionEngineReturns {
+
+interface OptionsEngine {
   init: (formValues: Record<string, unknown>) => void;
   getDependencies: () => string[];
   onDepsChange: (changedFields: string[], formValues: Record<string, unknown>) => void;
@@ -12,16 +10,15 @@ interface OptionEngineReturns {
 
 export function createOptionsEngine(
   config: OptionsConfig,
-  pubsub: CreatePubSubStateProps<OptionsState>,
-): OptionEngineReturns {
-  const handlers = createOptionsHandlerMap(config, pubsub);
+  operators: Record<OptionsSourceType, OptionsFn>,
+): OptionsEngine {
 
   const init = (formValues: Record<string, unknown>): void => {
     Object.entries(config).forEach(([sourceName, sourceConfig]) => {
       const { type } = sourceConfig;
-      handlers[type](sourceName, formValues);
+      operators[type](sourceName, formValues);
     });
-  };
+  }
 
   const getDependencies = (): string[] => Array.from(new Set(
     Object.values(config)
@@ -36,13 +33,13 @@ export function createOptionsEngine(
       const isImpacted = sourceConfig.dependencies.some((dep) => changedFields.includes(dep));
       if (!isImpacted) return;
 
-      handlers[OptionsSourceType.REMOTE_DYNAMIC](sourceName, formValues);
+      operators[OptionsSourceType.REMOTE_DYNAMIC](sourceName, formValues);
     });
   };
 
   return {
     init,
     getDependencies,
-    onDepsChange,
-  };
+    onDepsChange
+  }
 }

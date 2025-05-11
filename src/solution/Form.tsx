@@ -1,9 +1,10 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { FormConfig } from "./types";
 import { Field } from "./Field";
-import { OptionsProvider, EffectsProvider } from "./providers";
+import { EffectsProvider } from "./providers";
 import { templateMap } from "./templates";
 import { ValidationProvider } from "./modules/Validation";
+import { OptionsProvider} from "./modules/Options";
 
 export function Form({
   template,

@@ -1,6 +1,5 @@
-import { createContext } from 'react';
-
-import type { OptionsState } from './types';
+import { createContext } from "react";
+import { OptionsState } from "../types";
 
 export type OptionsContextProps<TState> = {
   getSnapshot: () => Map<string, TState>;

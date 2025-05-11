@@ -1,14 +1,10 @@
-import { Option } from '../../types';
-
-// Engine
+import type { Option } from '../../../types'
 
 export interface OptionsState {
   loading: boolean;
   data?: Option[];
   error?: unknown;
 }
-
-// Config - Consideration: Zod schema
 
 export enum OptionsSourceType {
   STATIC = 'static',
@@ -44,3 +40,9 @@ export interface OptionsSourceRemoteDynamic extends OptionsSourceRemoteBase {
 export type OptionsSource = OptionsSourceStatic | OptionsSourceRemote | OptionsSourceRemoteDynamic;
 
 export type OptionsConfig = Record<string, OptionsSource>;
+
+export interface OptionsToolbox {
+  publish: (name: string, data: OptionsState) => void;
+}
+
+export type OptionsFn = (sourceName: string, values?: Record<string, unknown>) => void | Promise<void>;

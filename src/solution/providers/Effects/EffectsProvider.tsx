@@ -3,7 +3,7 @@ import { EffectsContext } from "./EffectsContext";
 import { EffectsConfig, EffectState } from "./types";
 import { createEffectsEngine } from "./engine/createEffectsEngine";
 import { useFormContext } from "react-hook-form";
-import { useOptionsContext } from "../Options";
+import { useOptionsContext } from "../../modules/Options";
 import { createPubSubWithState } from "../../services/pubSub/createPubSubWithState";
 // import { EffectsDevtoolsPanel } from "./engine/tools/EffectsDevToolsPanel";
 

@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 
-import type { OptionsContextProps } from '../OptionsContext';
-import { OptionsContext } from '../OptionsContext';
+
 import type { OptionsState } from '../types';
+import { OptionsContext, OptionsContextProps } from '../context/OptionsContext';
 
 export const useOptionsContext = (): OptionsContextProps<OptionsState> => {
   const context = useContext(OptionsContext);

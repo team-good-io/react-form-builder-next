@@ -1,4 +1,4 @@
-import { OptionsConfig } from "./providers/Options/types";
+import { OptionsConfig } from "./modules/Options";
 import { EffectsConfig } from "./providers/Effects/types";
 import { templateMap } from "./templates";
 

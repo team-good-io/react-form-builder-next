@@ -1,9 +1,10 @@
-import { JSX, useEffect, useMemo } from 'react';
-import { useFormContext } from 'react-hook-form';
-import { OptionsContext } from './OptionsContext';
-import type { OptionsConfig, OptionsState } from './types';
-import { createOptionsEngine } from './engine/createOptionsEngine';
-import { createPubSubWithState } from '../../services/pubSub/createPubSubWithState';
+import { JSX, useEffect, useMemo } from "react";
+import { createPubSubWithState } from "../../../services/pubSub/createPubSubWithState";
+import { OptionsConfig, OptionsState } from "../types";
+import { useFormContext } from "react-hook-form";
+import { OptionsContext } from "./OptionsContext";
+import { createOptionsEngine } from "../engine/createOptionsEngine";
+import { createOperators } from "../engine/createOperators";
 
 interface OptionsProviderProps {
   config: OptionsConfig;
@@ -13,7 +14,8 @@ interface OptionsProviderProps {
 export function OptionsProvider({ config, children }: OptionsProviderProps): JSX.Element {
   const { watch, getValues } = useFormContext();
   const pubsub = useMemo(() => createPubSubWithState<OptionsState>(new Map()), []);
-  const engine = useMemo(() => createOptionsEngine(config, pubsub), [config, pubsub]);
+  const operators = useMemo(() => createOperators(config, pubsub.publish), [config, pubsub]);
+  const engine = useMemo(() => createOptionsEngine(config, operators), [config, operators]);
   const dependencies = useMemo(() => engine.getDependencies(), [engine]);
 
   useEffect(() => {

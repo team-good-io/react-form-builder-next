@@ -3,7 +3,8 @@ import { createRoot } from 'react-dom/client'
 
 import { Form } from './solution/Form.tsx'
 
-import { config } from './configs/demo-validation.ts'
+// import { config } from './configs/demo-validation.ts'
+import { config } from './configs/demo-options.ts'
 import { config as multiConfig } from './configs/demo-multiform.ts'
 
 import './index.css'
