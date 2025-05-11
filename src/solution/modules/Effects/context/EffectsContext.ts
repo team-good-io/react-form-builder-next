@@ -1,6 +1,6 @@
 import { createContext  } from "react";
 
-import type { EffectState } from "./types";
+import type { EffectState } from "../types";
 
 export type EffectsContextProps<TState> = {
   subscribe: (name: string, callback: (data: TState) => void) => { unsubscribe: () => void };

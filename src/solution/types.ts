@@ -1,5 +1,5 @@
 import { OptionsConfig } from "./modules/Options";
-import { EffectsConfig } from "./providers/Effects/types";
+import { EffectsConfig } from "./modules/Effects";
 import { templateMap } from "./templates";
 
 export interface Option<T = unknown> {

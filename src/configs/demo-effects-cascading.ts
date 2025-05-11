@@ -41,7 +41,8 @@ export const config: FormConfig = {
           target: 'SECOND_FIELD',
           value: {
             disabled: true,
-          }
+          },
+          runOnInit: true
         },
         {
           type: 'setValue',
@@ -78,7 +79,8 @@ export const config: FormConfig = {
           target: 'THIRD_FIELD',
           value: {
             disabled: true,
-          }
+          },
+          runOnInit: true
         },
         {
           type: 'setValue',

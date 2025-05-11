@@ -1,11 +1,11 @@
 import { Suspense, ComponentType, lazy } from "react";
 import { useFormContext } from "react-hook-form";
-import { useFieldEffects } from "./providers";
 import { FieldConfig } from "./types";
 import { getFieldErrorType } from "./utils";
 import { ValidationCheckList } from "./components/ValidationCheckList";
 import { useValidation } from "./modules/Validation";
 import { useFieldOptions } from "./modules/Options";
+import { useFieldEffects } from "./modules/Effects";
 
 const fieldMap: Record<string, ComponentType<FieldConfig & {error?: string}>> = {
   select: lazy(() => import('../ui/SelectField/SelectField')),

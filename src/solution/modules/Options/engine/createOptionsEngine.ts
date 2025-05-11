@@ -1,6 +1,4 @@
-
 import { OptionsConfig, OptionsFn, OptionsSourceType } from "../types";
-
 
 interface OptionsEngine {
   init: (formValues: Record<string, unknown>) => void;

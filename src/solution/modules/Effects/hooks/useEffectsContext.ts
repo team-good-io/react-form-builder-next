@@ -1,8 +1,7 @@
 import { useContext } from 'react';
 
-import type { EffectsContextProps } from '../EffectsContext';
-import { EffectsContext } from '../EffectsContext';
 import type { EffectState } from '../types';
+import { EffectsContext, EffectsContextProps } from '../context/EffectsContext';
 
 export const useEffectsContext = (): EffectsContextProps<EffectState> => {
   const context = useContext(EffectsContext);
