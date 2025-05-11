@@ -27,7 +27,7 @@ export const config: MultiFormProps = {
               type: 'setValue',
               target: 'EMAIL',
               value: 'effects@example.com',
-            }
+            },
           ]
         }
       ]

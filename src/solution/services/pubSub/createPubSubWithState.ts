@@ -40,7 +40,6 @@ export const createPubSubState = <TValue = unknown>(
     if (current) {
       const merged = deepMerge( current, payload);
       state.set(name, merged as TValue);
-      console.log(name, merged);
       pubsub.publish(name, merged as TValue);
     }
   };
