@@ -14,6 +14,22 @@ export const config: MultiFormProps = {
           name: "LASTNAME",
           type: "text",
         }
+      ],
+      effectsConfig: [
+        {
+          when: {
+            field: 'FIRSTNAME',
+            operator: '!==',
+            value: ''
+          },
+          actions: [
+            {
+              type: 'setValue',
+              target: 'EMAIL',
+              value: 'effects@example.com',
+            }
+          ]
+        }
       ]
     },
     {
@@ -23,7 +39,7 @@ export const config: MultiFormProps = {
           name: "EMAIL",
           type: "text",
           registerProps: {
-            validate: [['email'], ['availability', { type: 'email'}]]
+            validate: [['email'], ['availability', { type: 'email' }]]
           }
         },
         {
