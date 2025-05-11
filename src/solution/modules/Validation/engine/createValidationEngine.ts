@@ -15,12 +15,12 @@ export const createValidationEngine = (
 
     rules.forEach(([fn, params = {}]) => {
       const validationFn = operators[fn];
-      console.log(operators)
-      if (validationFn) {
-        result[fn] = validationFn(toolbox, params);
-      } else {
+      if (!validationFn) {
+        result[fn] = () => true; // Default to a no-op function
         console.error(`Unknown validate function: ${fn}`);
+        return;
       }
+      result[fn] = validationFn(toolbox, params);
     });
     return result;
   };

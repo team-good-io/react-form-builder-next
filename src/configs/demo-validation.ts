@@ -17,7 +17,7 @@ export const config: FormConfig = {
       type: "text",
       registerProps: {
         required: true,
-        validate: [["email"], ["emailAvailability"]],
+        validate: [["email"], ["availability", { type: 'email' }]],
       }
     },
     {

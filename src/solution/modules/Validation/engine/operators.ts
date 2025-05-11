@@ -1,12 +1,12 @@
-import { ValidationFactoryFn } from "../../types";
-import { availability } from "./availability";
-import { email } from "./email";
-import { matchValue } from "./matchValue";
-import { notContainValue } from "./notContainValue";
-import { oneLetter } from "./oneLetter";
-import { oneNumber } from "./oneNumber";
-import { pattern } from "./pattern";
-import { range } from "./range";
+import { ValidationFactoryFn } from "../types";
+import { availability } from "./operators/availability";
+import { email } from "./operators/email";
+import { matchValue } from "./operators/matchValue";
+import { notContainValue } from "./operators/notContainValue";
+import { oneLetter } from "./operators/oneLetter";
+import { oneNumber } from "./operators/oneNumber";
+import { pattern } from "./operators/pattern";
+import { range } from "./operators/range";
 
 const simple = (fn: (value: unknown) => boolean | string): ValidationFactoryFn => () => fn;
 
