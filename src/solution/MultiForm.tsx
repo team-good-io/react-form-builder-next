@@ -1,7 +1,8 @@
 
 import { FormConfig } from "./types";
-import { useCallback, useMemo, useState } from "react";
+import { act, useCallback, useMemo, useState } from "react";
 import { Form } from "./Form";
+import { Promo } from "./Promo";
 
 export interface MultiFormProps {
   defaultValues?: Record<string, unknown>;
@@ -71,6 +72,12 @@ export function MultiForm({
 
   if (!activeStep) {
     return null;
+  }
+
+  if(activeStep.type === "promo") {
+    return (
+      <Promo onValid={handleNextStep} />
+    )
   }
 
   return (

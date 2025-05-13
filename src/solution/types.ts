@@ -17,6 +17,7 @@ export interface FieldConfig {
 }
 
 export type FormConfig = {
+  type?: "form" | "promo";
   template: { name: keyof typeof templateMap, params?: Record<string, unknown> };
   meta?: Record<string, unknown>;
   fields: FieldConfig[];

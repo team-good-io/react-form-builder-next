@@ -33,6 +33,11 @@ export const config: MultiFormProps = {
       ]
     },
     {
+      type: "promo",
+      template: { name: "multiform" },
+      fields: []
+    },
+    {
       template: { name: "multiform" },
       fields: [
         {
