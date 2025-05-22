@@ -1,6 +1,6 @@
 
 import { FormConfig } from "./types";
-import { act, useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Form } from "./Form";
 import { Promo } from "./Promo";
 
