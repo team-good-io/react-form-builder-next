@@ -97,7 +97,7 @@ graph TD
   B --> C[OptionsEngine]
   C --> D[Operators: static/remote/dynamic]
   D --> E[PubSub notify]
-  E --> F[useFieldOptions()]
+  E --> F[useFieldOptions]
   F --> G[Field renders with options]
 ```
 
