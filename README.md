@@ -33,9 +33,9 @@ Wrap your form in the required providers:
 Use helpers like useFieldOptions and useValidation to bind dynamic logic to fields.
 
 ## Documentation
-* 🧩 [Options Module](https://github.com/team-good-io/react-form-builder-next/tree/main/src/docs/OPTIONS.md) – static/remote/dynamic dropdowns
-* ⚡ [Effects Module](https://github.com/team-good-io/react-form-builder-next/tree/main/src/docs/EFFECTS.md) – conditionally show/hide/reset/set fields
-* ✅ [Validation Module](https://github.com/team-good-io/react-form-builder-next/tree/main/src/docs/VALIDATION.md) – reusable, contextual validation logic
+* 🧩 [Options Module](https://github.com/team-good-io/react-form-builder-next/tree/main/docs/OPTIONS.md) – static/remote/dynamic dropdowns
+* ⚡ [Effects Module](https://github.com/team-good-io/react-form-builder-next/tree/main/docs/EFFECTS.md) – conditionally show/hide/reset/set fields
+* ✅ [Validation Module](https://github.com/team-good-io/react-form-builder-next/tree/main/docs/VALIDATION.md) – reusable, contextual validation logic
 
 ## Philosophy
 This project is built with the belief that:
