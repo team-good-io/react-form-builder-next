@@ -1,9 +1,7 @@
-import { ValidationToolbox } from "../../types";
-
 export function notContainValue(
   value: unknown,
   params: Record<string, unknown>,
-  toolbox: ValidationToolbox
+  { getValues }: { getValues: () => Record<string, unknown> }
 ) {
   if (typeof value !== 'string') {
     return false;
@@ -15,7 +13,7 @@ export function notContainValue(
     return true;
   }
 
-  const formValues = toolbox.getValues();
+  const formValues = getValues();
 
   return fields.every((fieldName) => {
     const fieldValue = formValues[fieldName];

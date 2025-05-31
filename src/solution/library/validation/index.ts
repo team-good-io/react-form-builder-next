@@ -1,4 +1,4 @@
-import { ValidationFactoryFn } from "../types";
+import { ValidationFactoryFn } from "../../modules/Validation";
 import { availability } from "./operators/availability";
 import { email } from "./operators/email";
 import { matchValue } from "./operators/matchValue";
@@ -10,13 +10,13 @@ import { range } from "./operators/range";
 
 const simple = (fn: (value: unknown) => boolean | string): ValidationFactoryFn => () => fn;
 
-export const operators: Record<string, ValidationFactoryFn> = {
-  email: simple(email),
+export const validationOperators: Record<string, ValidationFactoryFn> = {
   availability: (_toolbox, params) => (value) => availability(value, params),
+  email: simple(email),
   matchValue: (toolbox, params) => (value) => matchValue(value, params, toolbox),
-  range: (_toolbox, params) => (value) => range(value, params),
-  oneNumber: simple(oneNumber),
-  oneLetter: simple(oneLetter),
   notContainValue: (toolbox, params) => (value) => notContainValue(value, params, toolbox),
+  oneLetter: simple(oneLetter),
+  oneNumber: simple(oneNumber),
   pattern: (_toolbox, params) => (value) => pattern(value, params),
+  range: (_toolbox, params) => (value) => range(value, params),
 }

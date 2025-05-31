@@ -5,6 +5,8 @@ import { templateMap } from "./templates";
 import { ValidationProvider } from "./modules/Validation";
 import { OptionsProvider} from "./modules/Options";
 import { EffectsProvider } from "./modules/Effects";
+import { DefaultValidationOperatorRegistry } from "./modules/Validation";
+import { validationOperators} from "./library/validation";
 
 export function Form({
   template,
@@ -15,6 +17,7 @@ export function Form({
   onValid = () => {},
   onInvalid = () => {},
 }: FormConfig) {
+  const operators = new DefaultValidationOperatorRegistry(validationOperators);
   const instance = useForm({ defaultValues });
   const Template = templateMap[template.name];
 
@@ -22,7 +25,7 @@ export function Form({
     <FormProvider {...instance}>
       <OptionsProvider config={optionsConfig}>
           <EffectsProvider config={effectsConfig}>
-            <ValidationProvider>
+            <ValidationProvider operators={operators}>
               <form onSubmit={instance.handleSubmit(onValid, onInvalid)}>
                 <Template meta={template.params}>
                   {fields.map((field) => (

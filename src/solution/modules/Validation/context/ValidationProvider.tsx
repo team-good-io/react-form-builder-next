@@ -2,19 +2,28 @@ import { useFormContext } from 'react-hook-form';
 import { useMemo } from 'react';
 import { ValidationContext } from './ValidationContext';
 
-import { createValidationEngine } from '../engine/createValidationEngine';
-import { operators } from '../engine/operators';
+import { DefaultValidationManager } from '../manager/ValidationManager';
+import { ValidationOperatorRegistry } from '../manager/ValidationOperatorRegistry';
+import { ValidationRuleConfig } from '../types';
 
 interface ValidationProviderProps {
+  operators: ValidationOperatorRegistry;
   children: React.ReactNode;
 }
 
-export function ValidationProvider({ children }: ValidationProviderProps) {
+export function ValidationProvider({ operators, children }: ValidationProviderProps) {
   const methods = useFormContext();
-  const validation = useMemo(() => createValidationEngine(methods, operators), [methods]);
+  const validationManager = useMemo(
+    () => new DefaultValidationManager(methods, operators),
+    [methods, operators]
+  );
+
+  const validationContextValue = useMemo(() => ({
+    compile: (rules: ValidationRuleConfig[]) => validationManager.compile(rules),
+  }), [validationManager]);
 
   return (
-    <ValidationContext.Provider value={validation}>
+    <ValidationContext.Provider value={validationContextValue}>
       {children}
     </ValidationContext.Provider>
   );
