@@ -1,10 +1,9 @@
 import { useFormContext } from 'react-hook-form';
 import { useMemo } from 'react';
-import { ValidationContext } from './ValidationContext';
+import { ValidationContext, ValidationContextProps } from './ValidationContext';
 
 import { DefaultValidationManager } from '../manager/ValidationManager';
 import { ValidationOperatorRegistry } from '../manager/ValidationOperatorRegistry';
-import { ValidationRuleConfig } from '../types';
 
 interface ValidationProviderProps {
   registry: ValidationOperatorRegistry;
@@ -18,8 +17,8 @@ export function ValidationProvider({ registry, children }: ValidationProviderPro
     [methods, registry]
   );
 
-  const validationContextValue = useMemo(() => ({
-    compile: (rules: ValidationRuleConfig[]) => validationManager.compile(rules),
+  const validationContextValue: ValidationContextProps = useMemo(() => ({
+    compile: (rules) => validationManager.compile(rules),
   }), [validationManager]);
 
   return (

@@ -23,7 +23,6 @@ export class DefaultValidationManager implements ValidationManager {
 
   public compile(rules: ValidationRuleConfig[]): Record<string, ValidationFn> {
     const result: Record<string, ValidationFn> = {};
-    console.log(this);
 
     rules.forEach(([fn, params = {}]) => {
       const operator = this.registry.getOperator(fn);
@@ -34,6 +33,7 @@ export class DefaultValidationManager implements ValidationManager {
       }
       result[fn] = operator(this.toolbox, params);
     });
+
     return result;
   }
 
@@ -52,6 +52,7 @@ export class DefaultValidationManager implements ValidationManager {
           return name; // Return the name of the failed validation
         }
       }
+
       return true; // All passed
     }
   }
