@@ -8,17 +8,16 @@ export interface ValidationManager {
 
 export class DefaultValidationManager implements ValidationManager {
   private readonly toolbox: ValidationToolbox;
-  private readonly operators: ValidationOperatorRegistry;
+  private readonly registry: ValidationOperatorRegistry;
   private readonly logger: Console;
 
   constructor(
     toolbox: ValidationToolbox,
-    operators: ValidationOperatorRegistry,
+    registry: ValidationOperatorRegistry,
     logger: Console = console,
   ) {
     this.toolbox = toolbox;
-    this.operators = operators;
-    console.log(this.operators);
+    this.registry = registry;
     this.logger = logger;
   }
 
@@ -27,7 +26,7 @@ export class DefaultValidationManager implements ValidationManager {
     console.log(this);
 
     rules.forEach(([fn, params = {}]) => {
-      const operator = this.operators.getOperator(fn);
+      const operator = this.registry.getOperator(fn);
       if (!operator) {
         result[fn] = () => true; // Default to a no-op function
         this.logger.warn(`ValidationManager: Unknown validate function: ${fn}`);

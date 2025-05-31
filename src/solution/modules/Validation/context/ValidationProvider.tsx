@@ -7,15 +7,15 @@ import { ValidationOperatorRegistry } from '../manager/ValidationOperatorRegistr
 import { ValidationRuleConfig } from '../types';
 
 interface ValidationProviderProps {
-  operators: ValidationOperatorRegistry;
+  registry: ValidationOperatorRegistry;
   children: React.ReactNode;
 }
 
-export function ValidationProvider({ operators, children }: ValidationProviderProps) {
+export function ValidationProvider({ registry, children }: ValidationProviderProps) {
   const methods = useFormContext();
   const validationManager = useMemo(
-    () => new DefaultValidationManager(methods, operators),
-    [methods, operators]
+    () => new DefaultValidationManager(methods, registry),
+    [methods, registry]
   );
 
   const validationContextValue = useMemo(() => ({

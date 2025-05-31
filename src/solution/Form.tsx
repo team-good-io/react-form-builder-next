@@ -17,7 +17,7 @@ export function Form({
   onValid = () => {},
   onInvalid = () => {},
 }: FormConfig) {
-  const operators = new DefaultValidationOperatorRegistry(validationOperators);
+  const validationRegistry = new DefaultValidationOperatorRegistry(validationOperators);
   const instance = useForm({ defaultValues });
   const Template = templateMap[template.name];
 
@@ -25,7 +25,7 @@ export function Form({
     <FormProvider {...instance}>
       <OptionsProvider config={optionsConfig}>
           <EffectsProvider config={effectsConfig}>
-            <ValidationProvider operators={operators}>
+            <ValidationProvider registry={validationRegistry}>
               <form onSubmit={instance.handleSubmit(onValid, onInvalid)}>
                 <Template meta={template.params}>
                   {fields.map((field) => (
