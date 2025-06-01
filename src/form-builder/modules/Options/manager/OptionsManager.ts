@@ -2,6 +2,7 @@ import { OptionsConfig, OptionsFn, OptionsSourceType } from "../types";
 
 export interface OptionsManager {
   init: () => void;
+  observe: () => () => void;
 }
 
 export class DefaultOptionsManager implements OptionsManager {
@@ -25,6 +26,7 @@ export class DefaultOptionsManager implements OptionsManager {
     this.operators = operators;
     this.watch = watch;
     this.getValues = getValues;
+
     this.dependencies = this.getDependencies();
   }
 
@@ -57,14 +59,14 @@ export class DefaultOptionsManager implements OptionsManager {
   }
 
   public observe(): () => void {
-  const { unsubscribe } = this.watch((values, { name }) => {
-    if (name && this.dependencies.includes(name)) {
-      this.onDepsChange([name], values);
-    }
-  });
+    const { unsubscribe } = this.watch((values, { name }) => {
+      if (name && this.dependencies.includes(name)) {
+        this.onDepsChange([name], values);
+      }
+    });
 
-  return () => {
-    unsubscribe();
-  };
-}
+    return () => {
+      unsubscribe();
+    };
+  }
 }
