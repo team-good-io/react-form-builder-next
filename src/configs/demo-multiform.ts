@@ -1,4 +1,4 @@
-import { MultiFormProps } from "../solution/MultiForm";
+import { MultiFormProps } from "../form-builder/MultiForm";
 
 export const config: MultiFormProps = {
   defaultValues: {},

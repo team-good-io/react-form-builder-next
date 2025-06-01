@@ -1,20 +1,20 @@
 
-import { FormConfig } from "./types";
+import { FormConfig } from "../form-builder/types";
 import { useCallback, useMemo, useState } from "react";
-import { Form } from "./Form";
-import { Promo } from "./Promo";
+import { Form } from "../form-builder/Form";
+import { Promo } from "../form-builder/Promo";
 
-export interface MultiFormProps {
+export interface FlowBuilderProps {
   defaultValues?: Record<string, unknown>;
   steps: FormConfig[];
   onValid?: (values: Record<string, unknown>) => void;
 }
 
-export function MultiForm({
+export function FlowBuilder({
   defaultValues = {},
   steps,
   onValid
-}: MultiFormProps) {
+}: FlowBuilderProps) {
   const [activeStepIndex, setActiveStepIndex] = useState(0);
   const [values, setValues] = useState<Record<string, unknown>>(defaultValues);
 

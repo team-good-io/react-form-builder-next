@@ -1,4 +1,4 @@
-import { FormConfig } from "../solution/types";
+import { FormConfig } from "../form-builder/types";
 
 export const config: FormConfig = {
   template: {name: "signup"},
