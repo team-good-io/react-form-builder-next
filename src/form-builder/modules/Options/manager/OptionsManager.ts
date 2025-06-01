@@ -30,25 +30,6 @@ export class DefaultOptionsManager implements OptionsManager {
     this.dependencies = this.getDependencies();
   }
 
-  private getDependencies(): string[] {
-    return Array.from(new Set(
-      Object.values(this.config)
-        .filter((source) => source.type === OptionsSourceType.REMOTE_DYNAMIC)
-        .flatMap((source) => source.dependencies),
-    ));
-  }
-
-  private onDepsChange(changedFields: string[], values: Record<string, unknown>) {
-    Object.entries(this.config).forEach(([sourceName, sourceConfig]) => {
-      if (sourceConfig.type !== OptionsSourceType.REMOTE_DYNAMIC) return;
-
-      const isImpacted = sourceConfig.dependencies.some((dep) => changedFields.includes(dep));
-      if (!isImpacted) return;
-
-      this.operators[OptionsSourceType.REMOTE_DYNAMIC](sourceName, values);
-    });
-  }
-
   public init(): void {
     const values = this.getValues();
 
@@ -68,5 +49,24 @@ export class DefaultOptionsManager implements OptionsManager {
     return () => {
       unsubscribe();
     };
+  }
+
+  private onDepsChange(changedFields: string[], values: Record<string, unknown>) {
+    Object.entries(this.config).forEach(([sourceName, sourceConfig]) => {
+      if (sourceConfig.type !== OptionsSourceType.REMOTE_DYNAMIC) return;
+
+      const isImpacted = sourceConfig.dependencies.some((dep) => changedFields.includes(dep));
+      if (!isImpacted) return;
+
+      this.operators[OptionsSourceType.REMOTE_DYNAMIC](sourceName, values);
+    });
+  }
+
+  private getDependencies(): string[] {
+    return Array.from(new Set(
+      Object.values(this.config)
+        .filter((source) => source.type === OptionsSourceType.REMOTE_DYNAMIC)
+        .flatMap((source) => source.dependencies),
+    ));
   }
 }

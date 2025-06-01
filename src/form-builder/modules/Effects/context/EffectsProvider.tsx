@@ -14,10 +14,13 @@ interface EffectsProviderProps {
 }
 
 export function EffectsProvider({ config, children }: EffectsProviderProps) {
-  const { watch, ...methods } = useFormContext();
+  const methods = useFormContext();
   const { getSnapshot: getOptions } = useOptionsContext();
   const { publish, merge, subscribe } = useMemo(() => createPubSubWithState<EffectState>(new Map()), []);
-  const toolbox = useMemo(() => ({ ...methods, publish, merge, getOptions, watch }), [methods, getOptions, publish, merge]);
+  const toolbox = useMemo(
+    () => ({ ...methods, publish, merge, getOptions }),
+    [methods, publish, merge, getOptions]
+  );
   const actions = useMemo(() => createActions(toolbox), [toolbox]);
   const manager = useMemo(
     () => new DefaultEffectsManager(config, toolbox, operators, actions),
@@ -30,10 +33,10 @@ export function EffectsProvider({ config, children }: EffectsProviderProps) {
     return () => unobserve();
   }, [manager]);
 
-  const contextValue = useMemo(() => ({ subscribe }), [subscribe])
+  const ctxValue = useMemo(() => ({ subscribe }), [subscribe])
 
   return (
-    <EffectsContext.Provider value={contextValue}>
+    <EffectsContext.Provider value={ctxValue}>
       {children}
     </EffectsContext.Provider>
   )

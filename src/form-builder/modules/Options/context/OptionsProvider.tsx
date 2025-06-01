@@ -25,7 +25,7 @@ export function OptionsProvider({ config, children }: OptionsProviderProps): JSX
     manager.init();
     const unobserve = manager.observe();
     return () => unobserve();
-  });
+  }, [manager]);
 
   return (
     <OptionsContext.Provider value={pubsub}>

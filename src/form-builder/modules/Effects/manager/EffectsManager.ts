@@ -34,8 +34,6 @@ export class DefaultEffectsManager implements EffectsManager {
     this.dependencies = this.getDependencies();
   }
 
-  // Init function
-
   public async init() {
     const formValues = this.toolbox.getValues();
 
@@ -47,8 +45,6 @@ export class DefaultEffectsManager implements EffectsManager {
     }
   }
 
-  // observe effects
-
   public observe() {
     const { unsubscribe } = this.toolbox.watch((values, { name }) => {
       if (name && this.dependencies.includes(name)) {
@@ -58,8 +54,6 @@ export class DefaultEffectsManager implements EffectsManager {
 
     return () => unsubscribe();
   }
-
-  // Run observed effects
 
   onDepsChange = async (changedField: string, values: Record<string, unknown>) => {
     for (const rule of this.config) {
@@ -73,15 +67,11 @@ export class DefaultEffectsManager implements EffectsManager {
     }
   };
 
-  // Utility: Dependency collector (for broadcasting changes)
-
   private getDependencies(): string[] {
     return Array.from(new Set(
       this.config.flatMap(rule => this.collectFields(rule.when)),
     ));
   }
-
-  // Ulitity: Collect Fields (for dependencies)
 
   private collectFields(condition: EffectCondition): string[] {
     if ('type' in condition) {
@@ -97,8 +87,6 @@ export class DefaultEffectsManager implements EffectsManager {
     }
   }
 
-  // Utility: Selective Init Actions
-
   private shouldRunOnInit(action: EffectAction) {
     const conditionalInitActions = ['setValue', 'setFieldProps', 'setRegisterProps'];
     if (conditionalInitActions.includes(action.type)) {
@@ -106,9 +94,6 @@ export class DefaultEffectsManager implements EffectsManager {
     }
     return true;
   }
-
-
-  // Condition Evaluator (supports async + nested)
 
   private async evaluateCondition(condition: EffectCondition, formValues: Record<string, unknown>): Promise<boolean> {
     if ('type' in condition) {
@@ -142,8 +127,6 @@ export class DefaultEffectsManager implements EffectsManager {
     }
   }
 
-  // Queue action
-
   private queueAction(action: EffectAction) {
     this.actionQueue.push(action);
 
@@ -157,8 +140,6 @@ export class DefaultEffectsManager implements EffectsManager {
       });
     }
   }
-
-  // Action Executor
 
   private executeAction(action: EffectAction) {
     const actionFn = this.actions[action.type];
