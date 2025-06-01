@@ -3,16 +3,16 @@ import { useMemo } from 'react';
 import { ValidationContext, ValidationContextProps } from './ValidationContext';
 
 import { DefaultValidationManager } from '../manager/ValidationManager';
-import { ValidationOperatorRegistry } from '../manager/ValidationOperatorRegistry';
+import { ValidationFactoryFn } from '../types';
 
 interface ValidationProviderProps {
-  registry: ValidationOperatorRegistry;
+  operators: Record<string, ValidationFactoryFn>;
   children: React.ReactNode;
 }
 
-export function ValidationProvider({ registry, children }: ValidationProviderProps) {
+export function ValidationProvider({ operators, children }: ValidationProviderProps) {
   const methods = useFormContext();
-  const manager = useMemo(() => new DefaultValidationManager(methods, registry), [methods, registry]);
+  const manager = useMemo(() => new DefaultValidationManager(methods, operators), [methods, operators]);
 
   const ctxValue: ValidationContextProps = useMemo(() => ({
     compile: (rules) => manager.compile(rules),

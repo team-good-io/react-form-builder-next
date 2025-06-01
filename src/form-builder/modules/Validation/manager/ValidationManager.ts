@@ -1,5 +1,4 @@
-import { ValidationFn, ValidationRuleConfig, ValidationToolbox } from "../types";
-import { ValidationOperatorRegistry } from "./ValidationOperatorRegistry";
+import { ValidationFactoryFn, ValidationFn, ValidationRuleConfig, ValidationToolbox } from "../types";
 
 export interface ValidationManager {
   compile(rules: ValidationRuleConfig[]): Record<string, ValidationFn>;
@@ -8,16 +7,16 @@ export interface ValidationManager {
 
 export class DefaultValidationManager implements ValidationManager {
   private readonly toolbox: ValidationToolbox;
-  private readonly registry: ValidationOperatorRegistry;
+  private readonly operators: Record<string, ValidationFactoryFn>;
   private readonly logger: Console;
 
   constructor(
     toolbox: ValidationToolbox,
-    registry: ValidationOperatorRegistry,
+    operators: Record<string, ValidationFactoryFn>,
     logger: Console = console,
   ) {
     this.toolbox = toolbox;
-    this.registry = registry;
+    this.operators = operators;
     this.logger = logger;
   }
 
@@ -25,7 +24,7 @@ export class DefaultValidationManager implements ValidationManager {
     const result: Record<string, ValidationFn> = {};
 
     rules.forEach(([fn, params = {}]) => {
-      const operator = this.registry.getOperator(fn);
+      const operator = this.operators[fn];
       if (!operator) {
         result[fn] = () => true; // Default to a no-op function
         this.logger.warn(`ValidationManager: Unknown validate function: ${fn}`);
