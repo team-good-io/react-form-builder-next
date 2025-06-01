@@ -12,17 +12,14 @@ interface ValidationProviderProps {
 
 export function ValidationProvider({ registry, children }: ValidationProviderProps) {
   const methods = useFormContext();
-  const validationManager = useMemo(
-    () => new DefaultValidationManager(methods, registry),
-    [methods, registry]
-  );
+  const manager = useMemo(() => new DefaultValidationManager(methods, registry), [methods, registry]);
 
-  const validationContextValue: ValidationContextProps = useMemo(() => ({
-    compile: (rules) => validationManager.compile(rules),
-  }), [validationManager]);
+  const ctxValue: ValidationContextProps = useMemo(() => ({
+    compile: (rules) => manager.compile(rules),
+  }), [manager]);
 
   return (
-    <ValidationContext.Provider value={validationContextValue}>
+    <ValidationContext.Provider value={ctxValue}>
       {children}
     </ValidationContext.Provider>
   );

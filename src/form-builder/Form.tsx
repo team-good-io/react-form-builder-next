@@ -6,7 +6,7 @@ import { ValidationProvider } from "./modules/Validation";
 import { OptionsProvider} from "./modules/Options";
 import { EffectsProvider } from "./modules/Effects";
 import { DefaultValidationOperatorRegistry } from "./modules/Validation";
-import { validationOperators} from "./library/validation";
+import { validationOperators} from "./presets/validation";
 
 export function Form({
   template,
