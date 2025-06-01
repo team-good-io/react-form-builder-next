@@ -2,7 +2,8 @@
  * Effect state published to consumers (PubSub)
  */
 
-import { OptionsState } from "../Options/types";
+import { OptionsState } from "../../Options/types";
+
 
 export interface EffectState {
   fieldProps?: Record<string, unknown>;
@@ -67,6 +68,7 @@ export type EffectsConfig = EffectRule[];
  * Toolbox provided to effect engine for performing actions
  */
 export interface EffectsToolbox {
+  watch: (callback: (values: Record<string, unknown>, info: { name?: string }) => void) => { unsubscribe: () => void };
   getValues: () => Record<string, unknown>;
   getOptions: () => Map<string, OptionsState>;
   setValue: (name: string, value: unknown) => void;
