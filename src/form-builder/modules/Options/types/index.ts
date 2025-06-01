@@ -14,6 +14,7 @@ export enum OptionsSourceType {
 
 interface OptionsSourceBase {
   type: OptionsSourceType;
+  dependencies?: string[];
 }
 
 interface OptionsSourceRemoteBase extends OptionsSourceBase {

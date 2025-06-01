@@ -1,4 +1,4 @@
-import { OptionsConfig, OptionsFn, OptionsSource, OptionsSourceRemoteDynamic, OptionsSourceType } from "../types";
+import { OptionsConfig, OptionsFn, OptionsSourceType } from "../types";
 
 export interface OptionsManager {
   init: () => void;
@@ -51,7 +51,7 @@ export class DefaultOptionsManager implements OptionsManager {
 
   private onDepsChange(changedFields: string[], formValues: Record<string, unknown>) {
     Object.entries(this.config).forEach(([sourceName, sourceConfig]) => {
-      if (sourceConfig.type !== OptionsSourceType.REMOTE_DYNAMIC) return;
+      if (!sourceConfig.dependencies?.length) return;
 
       const isImpacted = sourceConfig.dependencies.some((dep) => changedFields.includes(dep));
       if (!isImpacted) return;
@@ -60,15 +60,12 @@ export class DefaultOptionsManager implements OptionsManager {
     });
   }
 
-  private hasDependencies(source: OptionsSource): source is OptionsSourceRemoteDynamic {
-    return 'dependencies' in source && source.dependencies.length > 0;
-  }
-
   private getDependencies(): string[] {
     return Array.from(new Set(
       Object.values(this.config)
-        .filter(this.hasDependencies)
-        .flatMap((source) => source.dependencies),
+        .filter((source) => source.dependencies && source.dependencies.length > 0)
+        .flatMap((source) => source.dependencies)
+        .filter((dep): dep is string => typeof dep === "string"),
     ));
   }
 }
