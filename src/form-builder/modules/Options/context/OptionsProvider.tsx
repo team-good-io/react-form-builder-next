@@ -4,7 +4,7 @@ import { OptionsConfig, OptionsState } from "../types";
 import { useFormContext } from "react-hook-form";
 import { OptionsContext } from "./OptionsContext";
 import { createOperators } from "../engine/createOperators";
-import { DefaultOptionsManager } from "../manager/OptionsManager";
+import { DefaultOptionsEngine } from "../engine/OptionsEngine";
 
 interface OptionsProviderProps {
   config: OptionsConfig;
@@ -16,16 +16,16 @@ export function OptionsProvider({ config, children }: OptionsProviderProps): JSX
   const pubsub = useMemo(() => createPubSubWithState<OptionsState>(new Map()), []);
   const operators = useMemo(() => createOperators(config, pubsub.publish), [config, pubsub]);
 
-  const manager = useMemo(
-    () => new DefaultOptionsManager(config, operators, watch, getValues),
+  const engine = useMemo(
+    () => new DefaultOptionsEngine(config, operators, watch, getValues),
     [config, getValues, operators, watch]
   );
   
   useEffect(() => {
-    manager.init();
-    const unobserve = manager.observe();
+    engine.init();
+    const unobserve = engine.observe();
     return () => unobserve();
-  }, [manager]);
+  }, [engine]);
 
   return (
     <OptionsContext.Provider value={pubsub}>

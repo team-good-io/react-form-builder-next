@@ -1,4 +1,4 @@
-# ValidationManager
+# ValidationEngine
 
 The `ValidationEngine` is a core component of the validation system. It’s responsible for compiling declarative validation rules into executable functions. It uses a registry of validation operators to resolve each rule into a specific validator function.
 

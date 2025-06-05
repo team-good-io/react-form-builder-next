@@ -2,12 +2,12 @@ import { ActionFunction } from "../engine/createActions";
 import { OperatorFunction } from "../engine/operators";
 import { EffectAction, EffectCondition, EffectsConfig, EffectsToolbox } from "../types";
 
-export interface EffectsManager {
+export interface EffectsEngine {
   init(): Promise<void>;
   observe(): void;
 }
 
-export class DefaultEffectsManager implements EffectsManager {
+export class DefaultEffectsEngine implements EffectsEngine {
   private readonly config: EffectsConfig;
 
   private readonly toolbox: EffectsToolbox;

@@ -2,7 +2,7 @@ import { useFormContext } from 'react-hook-form';
 import { useMemo } from 'react';
 import { ValidationContext, ValidationContextProps } from './ValidationContext';
 
-import { DefaultValidationManager } from '../manager/ValidationManager';
+import { DefaultValidationEngine } from '../engine/ValidationEngine';
 import { ValidationFactoryFn } from '../types';
 
 interface ValidationProviderProps {
@@ -12,11 +12,11 @@ interface ValidationProviderProps {
 
 export function ValidationProvider({ operators, children }: ValidationProviderProps) {
   const methods = useFormContext();
-  const manager = useMemo(() => new DefaultValidationManager(methods, operators), [methods, operators]);
+  const engine = useMemo(() => new DefaultValidationEngine(methods, operators), [methods, operators]);
 
   const ctxValue: ValidationContextProps = useMemo(() => ({
-    compile: (rules) => manager.compile(rules),
-  }), [manager]);
+    compile: (rules) => engine.compile(rules),
+  }), [engine]);
 
   return (
     <ValidationContext.Provider value={ctxValue}>

@@ -6,7 +6,7 @@ import { useEffect, useMemo } from "react";
 import { operators } from "../engine/operators";
 import { createActions } from "../engine/createActions";
 import { EffectsContext } from "./EffectsContext";
-import { DefaultEffectsManager } from "../manager/EffectsManager";
+import { DefaultEffectsEngine } from "../engine/EffectsEngine";
 
 interface EffectsProviderProps {
   config: EffectsConfig;
@@ -22,16 +22,16 @@ export function EffectsProvider({ config, children }: EffectsProviderProps) {
     [methods, publish, merge, getOptions]
   );
   const actions = useMemo(() => createActions(toolbox), [toolbox]);
-  const manager = useMemo(
-    () => new DefaultEffectsManager(config, toolbox, operators, actions),
+  const engine = useMemo(
+    () => new DefaultEffectsEngine(config, toolbox, operators, actions),
     [config, actions, toolbox]
   );
 
   useEffect(() => {
-    manager.init();
-    const unobserve = manager.observe();
+    engine.init();
+    const unobserve = engine.observe();
     return () => unobserve();
-  }, [manager]);
+  }, [engine]);
 
   const ctxValue = useMemo(() => ({ subscribe }), [subscribe])
 

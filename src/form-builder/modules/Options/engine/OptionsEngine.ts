@@ -1,11 +1,11 @@
 import { OptionsConfig, OptionsFn, OptionsSourceType } from "../types";
 
-export interface OptionsManager {
+export interface OptionsEngine {
   init: () => void;
   observe: () => () => void;
 }
 
-export class DefaultOptionsManager implements OptionsManager {
+export class DefaultOptionsEngine implements OptionsEngine {
   private readonly config: OptionsConfig;
 
   private readonly operators: Record<OptionsSourceType, OptionsFn>;
