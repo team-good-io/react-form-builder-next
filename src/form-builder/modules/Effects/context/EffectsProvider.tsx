@@ -1,12 +1,13 @@
 import { useFormContext } from "react-hook-form";
 import { EffectsConfig, EffectState } from "../types";
 import { useOptionsContext } from "../../Options";
-import { createPubSubWithState } from "../../../services/pubSub/createPubSubWithState";
+import { PubSubState } from "../../../services/pubSub/PubSubState";
 import { useEffect, useMemo } from "react";
 import { operators } from "../engine/operators";
 import { createActions } from "../engine/createActions";
-import { EffectsContext } from "./EffectsContext";
+import { EffectsContext, EffectsContextProps } from "./EffectsContext";
 import { DefaultEffectsEngine } from "../engine/EffectsEngine";
+import { bindMethods } from "../../../utils/bindMethods";
 
 interface EffectsProviderProps {
   config: EffectsConfig;
@@ -16,7 +17,7 @@ interface EffectsProviderProps {
 export function EffectsProvider({ config, children }: EffectsProviderProps) {
   const methods = useFormContext();
   const { getSnapshot: getOptions } = useOptionsContext();
-  const { publish, merge, subscribe } = useMemo(() => createPubSubWithState<EffectState>(new Map()), []);
+  const { publish, merge, subscribe } = useMemo(() => bindMethods(new PubSubState<EffectState>(new Map())), []);
   const toolbox = useMemo(
     () => ({ ...methods, publish, merge, getOptions }),
     [methods, publish, merge, getOptions]
@@ -33,7 +34,7 @@ export function EffectsProvider({ config, children }: EffectsProviderProps) {
     return () => unobserve();
   }, [engine]);
 
-  const ctxValue = useMemo(() => ({ subscribe }), [subscribe])
+  const ctxValue: EffectsContextProps<EffectState> = useMemo(() => ({ subscribe }), [subscribe])
 
   return (
     <EffectsContext.Provider value={ctxValue}>

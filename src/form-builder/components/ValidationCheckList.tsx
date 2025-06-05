@@ -1,5 +1,5 @@
 import { useFormContext, ValidateResult } from "react-hook-form";
-import { ValidationFn } from "../providers";
+import { ValidationFn } from "../modules/Validation/types";
 import { useEffect, useMemo, useState } from "react";
 
 interface ValidationCheckListProps {
