@@ -1,11 +1,11 @@
 import { ValidationFactoryFn, ValidationFn, ValidationRuleConfig, ValidationToolbox } from "../types";
 
-export interface ValidationManager {
+export interface ValidationEngine {
   compile(rules: ValidationRuleConfig[]): Record<string, ValidationFn>;
   compileToSingleValidator(rules: ValidationRuleConfig[]): ValidationFn;
 }
 
-export class DefaultValidationManager implements ValidationManager {
+export class DefaultValidationEngine implements ValidationEngine {
   private readonly toolbox: ValidationToolbox;
   private readonly operators: Record<string, ValidationFactoryFn>;
   private readonly logger: Console;
@@ -27,7 +27,7 @@ export class DefaultValidationManager implements ValidationManager {
       const operator = this.operators[fn];
       if (!operator) {
         result[fn] = () => true; // Default to a no-op function
-        this.logger.warn(`ValidationManager: Unknown validate function: ${fn}`);
+        this.logger.warn(`ValidationEngine: Unknown validate function: ${fn}`);
         return;
       }
       result[fn] = operator(this.toolbox, params);
@@ -47,7 +47,7 @@ export class DefaultValidationManager implements ValidationManager {
           return result; // Return the first failure
         }
         } catch (error) {
-          this.logger.error(`ValidationManager: Validation error in ${name}:`, error);
+          this.logger.error(`ValidationEngine: Validation error in ${name}:`, error);
           return name; // Return the name of the failed validation
         }
       }

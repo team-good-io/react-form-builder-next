@@ -3,9 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { FieldConfig } from "./types";
 import { getFieldErrorType } from "./utils";
 import { ValidationCheckList } from "./components/ValidationCheckList";
-import { useValidation } from "./modules/Validation";
-import { useFieldOptions } from "./modules/Options";
-import { useFieldEffects } from "./modules/Effects";
+import { useResolvedFieldConfig } from "./hooks/useResolvedFieldConfig";
 
 const fieldMap: Record<string, ComponentType<FieldConfig & {error?: string}>> = {
   select: lazy(() => import('../ui/SelectField/SelectField')),
@@ -14,25 +12,10 @@ const fieldMap: Record<string, ComponentType<FieldConfig & {error?: string}>> = 
   password: lazy(() => import('../ui/PasswordField/PasswordField')),
 };
 
-export function Field({
-  type,
-  name,
-  options: baseOptions = [],
-  fieldProps: baseFieldProps = {},
-  registerProps: baseRegisterProps = {},
-}: FieldConfig) {
-  const { register, formState: { errors } } = useFormContext();
-  const fieldOptions = useFieldOptions(name);
-  const fieldEffects = useFieldEffects(name);
-
-  const options = fieldEffects.options?.data || [...baseOptions, ...(fieldOptions.data || [])];
-  const fieldProps = { ...baseFieldProps, ...(fieldEffects.fieldProps || {}) }
-  const registerProps = { ...baseRegisterProps, ...(fieldEffects.registerProps || {}) }
-
-  const validate = useValidation(Array.isArray(registerProps.validate) ? registerProps.validate : []);
-
-  const field = register(name, { ...registerProps, validate });
-  const inputProps = { ...fieldProps, ...field, id: name, options, type }
+export function Field(props: FieldConfig) {
+  const {type, name } = props;
+  const { formState: { errors } } = useFormContext();
+  const { inputProps, validate} = useResolvedFieldConfig(props)
 
   const error = errors[name];
   const errorType = getFieldErrorType(error);

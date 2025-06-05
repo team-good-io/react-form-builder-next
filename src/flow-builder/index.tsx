@@ -2,7 +2,7 @@
 import { FormConfig } from "../form-builder/types";
 import { useCallback, useMemo, useState } from "react";
 import { Form } from "../form-builder/Form";
-import { Promo } from "../form-builder/Promo";
+import { Promo } from "../demo/signup/components/Promo";
 
 export interface FlowBuilderProps {
   defaultValues?: Record<string, unknown>;

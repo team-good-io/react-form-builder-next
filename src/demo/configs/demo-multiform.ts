@@ -1,6 +1,6 @@
-import { MultiFormProps } from "../form-builder/MultiForm";
+import { FlowBuilderProps } from "../../flow-builder";
 
-export const config: MultiFormProps = {
+export const config: FlowBuilderProps = {
   defaultValues: {},
   steps: [
     {
