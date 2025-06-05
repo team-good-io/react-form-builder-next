@@ -88,11 +88,7 @@ export class DefaultEffectsEngine implements EffectsEngine {
   }
 
   private shouldRunOnInit(action: EffectAction) {
-    const conditionalInitActions = ['setValue', 'setFieldProps', 'setRegisterProps'];
-    if (conditionalInitActions.includes(action.type)) {
-      return action.runOnInit;
-    }
-    return true;
+    return action.skipOnInit !== true;
   }
 
   private async evaluateCondition(condition: EffectCondition, formValues: Record<string, unknown>): Promise<boolean> {

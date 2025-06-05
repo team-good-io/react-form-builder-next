@@ -62,7 +62,6 @@ export const config: FormConfig = {
           type: 'setValue',
           target: 'CITIZENSHIP',
           value: 'PE',
-          runOnInit: true
         },
         {
           type: 'setFieldProps',

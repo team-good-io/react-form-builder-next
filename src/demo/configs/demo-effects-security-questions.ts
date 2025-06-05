@@ -65,7 +65,6 @@ export const config: FormConfig = {
         {
           type: 'deduplicateOptions',
           targets: ['SECURITY_QUESTION_1', 'SECURITY_QUESTION_2'],
-          runOnInit: true
         }
       ]
     }

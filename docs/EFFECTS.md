@@ -58,14 +58,14 @@ These can be nested as deeply as needed.
 | `deduplicateOptions` | De-duplicate options across fields   |
 
 ```ts
-{ type: 'setValue', target: 'country', value: 'us', runOnInit: true }
+{ type: 'setValue', target: 'country', value: 'us', skipOnInit: true }
 { type: 'hideField', target: 'ssn' }
 { type: 'deduplicateOptions', targets: ['optionA', 'optionB'] }
 ```
 
 ## Lifecycle & Execution
 
-* On Init: Executes only those actions marked with `runOnInit: true`
+* On Init: Executes actions, skip actions marked with `skipOnInit: true`
 * On Dependency Change: Automatically reevaluates rules and executes matching actions
 
 ## Engine Behavior

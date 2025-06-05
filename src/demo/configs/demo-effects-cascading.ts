@@ -42,7 +42,6 @@ export const config: FormConfig = {
           value: {
             disabled: true,
           },
-          runOnInit: true
         },
         {
           type: 'setValue',
@@ -80,7 +79,6 @@ export const config: FormConfig = {
           value: {
             disabled: true,
           },
-          runOnInit: true
         },
         {
           type: 'setValue',

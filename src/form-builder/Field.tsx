@@ -27,7 +27,7 @@ export function Field(props: FieldConfig) {
     return <input {...inputProps} type="hidden" />
   }
 
-  if(type === 'password' && fieldProps.showValidationCheckList) {
+  if(type === 'password' && inputProps.showValidationCheckList) {
     return (
       <Suspense fallback={null}>
         <div>

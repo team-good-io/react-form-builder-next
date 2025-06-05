@@ -35,18 +35,18 @@ export type EffectCondition = SimpleCondition | CompositeCondition;
 
 /**
  * EffectAction types
- * - `runOnInit`: some actions skip init by default to avoid overriding initial values
+ * - `skipOnInit`: skip actions on init to avoid overriding initial values
  */
 
 export type EffectAction =
-  | { type: 'setValue'; target: string; value: unknown; runOnInit?: boolean }
-  | { type: 'setRegisterProps'; target: string; value: Record<string, unknown> }
-  | { type: 'resetField'; target: string; runOnInit?: boolean }
-  | { type: 'showField'; target: string }
-  | { type: 'hideField'; target: string }
-  | { type: 'clearErrors'; target: string }
-  | { type: 'setFieldProps'; target: string; value: Record<string, unknown> }
-  | { type: 'deduplicateOptions'; targets: string[]; runOnInit?: boolean }
+  | { type: 'setValue'; target: string; value: unknown; skipOnInit?: boolean }
+  | { type: 'setRegisterProps'; target: string; value: Record<string, unknown>; skipOnInit?: boolean }
+  | { type: 'resetField'; target: string; skipOnInit?: boolean }
+  | { type: 'showField'; target: string; skipOnInit?: boolean }
+  | { type: 'hideField'; target: string; skipOnInit?: boolean }
+  | { type: 'clearErrors'; target: string; skipOnInit?: boolean }
+  | { type: 'setFieldProps'; target: string; value: Record<string, unknown>; skipOnInit?: boolean }
+  | { type: 'deduplicateOptions'; targets: string[]; skipOnInit?: boolean }
 
 /**
  * Single effect rule

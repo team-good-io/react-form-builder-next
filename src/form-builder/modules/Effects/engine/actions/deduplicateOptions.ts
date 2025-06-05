@@ -1,7 +1,7 @@
-import { EffectAction, EffectsToolbox } from "../../types";
+import { EffectsToolbox } from "../../types";
 
 export function deduplicateOptions(
-  action: EffectAction,
+  action: { type: 'deduplicateOptions'; targets: string[]; skipOnInit?: boolean },
   toolbox: EffectsToolbox,
 ) {
   const values = toolbox.getValues();
