@@ -1,8 +1,8 @@
 import { useMemo } from "react";
-import { ValidationRuleConfig } from "../types";
+import { ValidationRule } from "../types";
 import { useValidationContext } from "./useValidationContext";
 
-export function useValidation(rules: ValidationRuleConfig[]) {
+export function useValidation(rules: ValidationRule[]) {
   const context = useValidationContext();
   const { compile } = context;
 

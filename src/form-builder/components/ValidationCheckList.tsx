@@ -1,10 +1,10 @@
 import { useFormContext, ValidateResult } from "react-hook-form";
-import { ValidationFn } from "../modules/Validation/types";
+import { ValidatorFn } from "../modules/Validation/types";
 import { useEffect, useMemo, useState } from "react";
 
 interface ValidationCheckListProps {
   name: string;
-  validate: Record<string, ValidationFn>;
+  validate: Record<string, ValidatorFn>;
 }
 
 export function ValidationCheckList({name, validate}: ValidationCheckListProps) {
