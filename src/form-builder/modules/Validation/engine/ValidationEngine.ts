@@ -39,13 +39,13 @@ export class DefaultValidationEngine implements ValidationEngine {
     const result: Record<string, ValidatorFn> = {};
 
     rules.forEach(([fn, params = {}]) => {
-      const action = this.operatorRegistry.get(fn);
-      if (!action) {
+      const operator = this.operatorRegistry.get(fn);
+      if (!operator) {
         result[fn] = () => true; // Default to a no-op function
         this.logger.warn(`ValidationEngine: Unknown validate function: ${fn}`);
         return;
       }
-      result[fn] = action.create(this.toolbox, params);
+      result[fn] = operator.create(this.toolbox, params);
     });
 
     return result;

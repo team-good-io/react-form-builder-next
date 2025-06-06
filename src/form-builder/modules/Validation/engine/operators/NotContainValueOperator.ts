@@ -19,7 +19,7 @@ export class NotContainValueOperator implements ValidationOperator {
         return true;
       }
 
-      const formValues = toolbox.getValues();
+      const formValues = toolbox.getFormValues();
 
       return fields.every((fieldName) => {
         const fieldValue = formValues[fieldName];

@@ -14,7 +14,7 @@ export class MatchValueOperator implements ValidationOperator {
         console.warn("Invalid parameter: 'name' must be a string");
         return true;
       }
-      const fieldValue = toolbox.getValues()[fieldName];
+      const fieldValue = toolbox.getFormValues()[fieldName];
       return value === fieldValue;
     }
   }
