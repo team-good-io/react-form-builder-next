@@ -1,4 +1,4 @@
-import type { Option } from '../../../../types';
+import { Option } from '../types';
 
 export async function fetchOptionsFromRemote(
   url: string,

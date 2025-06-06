@@ -1,6 +1,5 @@
 import { useContext } from 'react';
 
-
 import type { OptionsState } from '../types';
 import { OptionsContext, OptionsContextProps } from '../context/OptionsContext';
 

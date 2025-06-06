@@ -5,7 +5,8 @@ import { Form } from './form-builder/Form.tsx'
 
 // import { config } from './demo/configs/demo-effects-document.ts'
 // import { config } from './demo/configs/demo-effects-cascading.ts'
-import { config } from './demo/configs/demo-validation.ts'
+import { config } from './demo/configs/demo-options.ts'
+// import { config } from './demo/configs/demo-validation.ts'
 // import { config } from './demo/configs/demo-effects-security-questions.ts'
 import { config as multiConfig } from './demo/configs/demo-multiform.ts'
 

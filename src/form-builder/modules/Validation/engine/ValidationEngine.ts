@@ -59,10 +59,10 @@ export class DefaultValidationEngine implements ValidationEngine {
   public compileToSingleValidator(rules: ValidationRule[]): ValidatorFn {
     const compiled = this.compile(rules);
 
-    return (value: unknown): boolean | string | Promise<boolean | string> => {
+    return async (value: unknown): Promise<boolean | string> => {
       for (const [name, validator] of Object.entries(compiled)) {
         try {
-          const result = validator(value);
+          const result = await validator(value);
           if (result !== true) {
             return result; // Return the first failure
           }
