@@ -7,7 +7,7 @@ import { ValidationOperator } from "../types";
 import { DefaultValidationOperatorRegistry } from "../engine/ValidationOperatorRegistry";
 
 interface ValidationProviderProps {
-  customOperators: Record<string, ValidationOperator>;
+  customOperators?: Record<string, ValidationOperator>;
   children: React.ReactNode;
 }
 

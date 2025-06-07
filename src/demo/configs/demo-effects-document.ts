@@ -53,19 +53,19 @@ export const config: FormConfig = {
       actions: [
         {
           type: 'setRegisterProps',
-          target: 'ID_DOCUMENT_NUMBER',
+          targets: ['ID_DOCUMENT_NUMBER'],
           value: {
             minLength: 8
           }
         },
         {
           type: 'setValue',
-          target: 'CITIZENSHIP',
+          targets:[ 'CITIZENSHIP'],
           value: 'PE',
         },
         {
           type: 'setFieldProps',
-          target: 'CITIZENSHIP',
+          targets: ['CITIZENSHIP'],
           value: {
             disabled: true
           }
@@ -81,14 +81,14 @@ export const config: FormConfig = {
       actions: [
         {
           type: 'setRegisterProps',
-          target: 'ID_DOCUMENT_NUMBER',
+          targets: ['ID_DOCUMENT_NUMBER'],
           value: {
             minLength: 10
           }
         },
         {
           type: 'setFieldProps',
-          target: 'CITIZENSHIP',
+          targets: ['CITIZENSHIP'],
           value: {
             disabled: false
           }
@@ -104,7 +104,7 @@ export const config: FormConfig = {
       actions: [
         {
           type: 'showField',
-          target: 'CE_EXPIRY'
+          targets: ['CE_EXPIRY']
         }
       ]
     },
@@ -117,7 +117,7 @@ export const config: FormConfig = {
       actions: [
         {
           type: 'hideField',
-          target: 'CE_EXPIRY'
+          targets: ['CE_EXPIRY']
         }
       ]
     }

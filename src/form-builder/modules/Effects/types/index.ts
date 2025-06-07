@@ -39,13 +39,13 @@ export type EffectCondition = SimpleCondition | CompositeCondition;
  */
 
 export type EffectAction =
-  | { type: 'setValue'; target: string; value: unknown; skipOnInit?: boolean }
-  | { type: 'setRegisterProps'; target: string; value: Record<string, unknown>; skipOnInit?: boolean }
-  | { type: 'resetField'; target: string; skipOnInit?: boolean }
-  | { type: 'showField'; target: string; skipOnInit?: boolean }
-  | { type: 'hideField'; target: string; skipOnInit?: boolean }
-  | { type: 'clearErrors'; target: string; skipOnInit?: boolean }
-  | { type: 'setFieldProps'; target: string; value: Record<string, unknown>; skipOnInit?: boolean }
+  | { type: 'setValue'; targets: string[]; value: unknown; skipOnInit?: boolean }
+  | { type: 'setRegisterProps'; targets: string[]; value: Record<string, unknown>; skipOnInit?: boolean }
+  | { type: 'resetField'; targets: string[]; skipOnInit?: boolean }
+  | { type: 'showField'; targets: string[]; skipOnInit?: boolean }
+  | { type: 'hideField'; targets: string[]; skipOnInit?: boolean }
+  | { type: 'clearErrors'; targets: string[]; skipOnInit?: boolean }
+  | { type: 'setFieldProps'; targets: string[]; value: Record<string, unknown>; skipOnInit?: boolean }
   | { type: 'deduplicateOptions'; targets: string[]; skipOnInit?: boolean }
 
 /**
@@ -77,4 +77,12 @@ export interface EffectsToolbox {
   publish: (name: string, state: EffectState) => void;
   merge: (name: string, state: EffectState) => void;
   // Future: add showField / hideField hooks here for full future-proofing
+}
+
+export type EffectFn = (
+  action: EffectAction,
+) => void | Promise<void>;
+
+export interface EffectOperator {
+  execute: EffectFn;
 }

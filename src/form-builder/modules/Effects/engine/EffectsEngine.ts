@@ -1,9 +1,10 @@
-import { ActionFunction } from "../engine/createActions";
-import { OperatorFunction } from "../engine/operators";
-import { EffectAction, EffectCondition, EffectsConfig, EffectsToolbox } from "../types";
+import { EffectAction, EffectCondition, EffectsConfig } from "../types";
+import { EffectsActionsRegistry } from "./EffectsActionsRegistry";
+import { EffectEvaluatorRegistry } from "./EffectsEvaluatorRegistry";
+import { EffectsToolbox } from "./EffectsToolbox";
 
-export interface EffectsEngine {
-  init(): Promise<void>;
+interface EffectsEngine {
+  run(): Promise<void>;
   observe(): void;
 }
 
@@ -12,9 +13,9 @@ export class DefaultEffectsEngine implements EffectsEngine {
 
   private readonly toolbox: EffectsToolbox;
 
-  private readonly operators: Record<string, OperatorFunction>;
+  private readonly evaluators: EffectEvaluatorRegistry;
 
-  private readonly actions: Record<EffectAction["type"], ActionFunction>;
+  private readonly actions: EffectsActionsRegistry;
 
   private dependencies: string[] = [];
   private actionQueue: EffectAction[] = [];
@@ -23,19 +24,19 @@ export class DefaultEffectsEngine implements EffectsEngine {
   constructor(
     config: EffectsConfig,
     toolbox: EffectsToolbox,
-    operators: Record<string, OperatorFunction>,
-    actions: Record<string, ActionFunction>,
+    evaluators: EffectEvaluatorRegistry,
+    actions: EffectsActionsRegistry
   ) {
     this.config = config;
     this.toolbox = toolbox;
-    this.operators = operators;
+    this.evaluators = evaluators;
     this.actions = actions;
 
     this.dependencies = this.getDependencies();
   }
 
-  public async init() {
-    const formValues = this.toolbox.getValues();
+  public async run() {
+    const formValues = this.toolbox.form.getValues();
 
     for (const rule of this.config) {
       const allConditionsMet = await this.evaluateCondition(rule.when, formValues);
@@ -46,7 +47,7 @@ export class DefaultEffectsEngine implements EffectsEngine {
   }
 
   public observe() {
-    const { unsubscribe } = this.toolbox.watch((values, { name }) => {
+    const { unsubscribe } = this.toolbox.form.watch((values, { name }) => {
       if (name && this.dependencies.includes(name)) {
         this.onDepsChange(name, values);
       }
@@ -111,7 +112,7 @@ export class DefaultEffectsEngine implements EffectsEngine {
       }
     } else {
       const fieldValue = formValues[condition.field];
-      const operatorFn = this.operators[condition.operator];
+      const operatorFn = this.evaluators.get(condition.operator);
 
       if (!operatorFn) {
         console.error(`Unsupported operator: ${condition.operator}`);
@@ -138,11 +139,11 @@ export class DefaultEffectsEngine implements EffectsEngine {
   }
 
   private executeAction(action: EffectAction) {
-    const actionFn = this.actions[action.type];
+    const actionFn = this.actions.get(action.type);
     if (!actionFn) {
       console.error(`Unknown action: ${JSON.stringify(action)}`);
       return;
     }
-    actionFn(action);
+    actionFn.execute(action);
   };
 }

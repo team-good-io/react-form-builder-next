@@ -38,14 +38,14 @@ export const config: FormConfig = {
       actions: [
         {
           type: 'setFieldProps',
-          target: 'SECOND_FIELD',
+          targets: ['SECOND_FIELD'],
           value: {
             disabled: true,
           },
         },
         {
           type: 'setValue',
-          target: 'SECOND_FIELD',
+          targets: ['SECOND_FIELD'],
           value: '',
         }
       ]
@@ -59,7 +59,7 @@ export const config: FormConfig = {
       actions: [
         {
           type: 'setFieldProps',
-          target: 'SECOND_FIELD',
+          targets: ['SECOND_FIELD'],
           value: {
             disabled: false,
           }
@@ -75,14 +75,14 @@ export const config: FormConfig = {
       actions: [
         {
           type: 'setFieldProps',
-          target: 'THIRD_FIELD',
+          targets: ['THIRD_FIELD'],
           value: {
             disabled: true,
           },
         },
         {
           type: 'setValue',
-          target: 'THIRD_FIELD',
+          targets: ['THIRD_FIELD'],
           value: '',
         }
       ]
@@ -96,7 +96,7 @@ export const config: FormConfig = {
       actions: [
         {
           type: 'setFieldProps',
-          target: 'THIRD_FIELD',
+          targets: ['THIRD_FIELD'],
           value: {
             disabled: false,
           }

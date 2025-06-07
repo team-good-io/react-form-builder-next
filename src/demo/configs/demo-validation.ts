@@ -73,7 +73,7 @@ export const config: FormConfig = {
       actions: [
         {
           type: 'setRegisterProps',
-          target: 'ID_DOCUMENT_NUMBER',
+          targets: ['ID_DOCUMENT_NUMBER'],
           value: {
             validate: [
               ['pattern', { pattern: '^[0-9]{8}$' }]]
@@ -90,7 +90,7 @@ export const config: FormConfig = {
       actions: [
         {
           type: 'setRegisterProps',
-          target: 'ID_DOCUMENT_NUMBER',
+          targets: ['ID_DOCUMENT_NUMBER'],
           value: {
             validate: [
               [ 'pattern', { pattern: '^[a-zA-Z0-9]{9,12}$' } ],

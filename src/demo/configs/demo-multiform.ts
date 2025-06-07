@@ -25,7 +25,7 @@ export const config: FlowBuilderProps = {
           actions: [
             {
               type: 'setValue',
-              target: 'EMAIL',
+              targets: ['EMAIL'],
               value: 'effects@example.com',
             },
           ]
