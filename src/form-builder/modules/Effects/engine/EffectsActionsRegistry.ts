@@ -1,27 +1,8 @@
+import { Registry } from "../../core/Registry";
 import { CommandFactory } from "../types";
 import { SetValueCommand, ClearErrorsCommand, DeduplicateOptionsCommand, HideFieldCommand, ResetFieldCommand, SetFieldPropsCommand, SetRegisterPropsCommand, ShowFieldCommand } from "./actions";
 
-export class EffectsActionsRegistry {
-  private registry: Map<string, CommandFactory> = new Map();
-
-  register(name: string, fn: CommandFactory, override = false): void {
-    if (!override && this.registry.has(name)) {
-      console.error(`EffectAction "${name}" already registered. Use 'override' to replace.`);
-      return;
-    }
-    this.registry.set(name, fn);
-  }
-
-  get(name: string): CommandFactory | undefined {
-    return this.registry.get(name);
-  }
-
-  has(name: string): boolean {
-    return this.registry.has(name);
-  }
-}
-
-export class DefaultEffectsActionsRegistry extends EffectsActionsRegistry {
+export class DefaultEffectsActionsRegistry extends Registry<CommandFactory> {
   constructor(customActions: Record<string, CommandFactory> = {}) {
     super();
     this.registerDefaults();

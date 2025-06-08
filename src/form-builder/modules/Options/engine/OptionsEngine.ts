@@ -1,5 +1,5 @@
-import { OptionsConfig } from "../types";
-import { OptionsOperatorRegistry } from "./OptionsOperatorRegistry";
+import { Registry } from "../../core/Registry";
+import { OptionsCommandFactory, OptionsConfig } from "../types";
 import { OptionsToolbox } from "./OptionsToolbox";
 
 interface OptionsEngine {
@@ -12,14 +12,14 @@ export class DefaultOptionsEngine implements OptionsEngine {
 
   private readonly toolbox: OptionsToolbox;
 
-  private readonly operators: OptionsOperatorRegistry;
+  private readonly operators: Registry<OptionsCommandFactory>;
 
   private dependencies: string[] = [];
 
   constructor(
     config: OptionsConfig,
     toolbox: OptionsToolbox,
-    operators: OptionsOperatorRegistry,
+    operators: Registry<OptionsCommandFactory>,
   ) {
     this.config = config;
     this.toolbox = toolbox;

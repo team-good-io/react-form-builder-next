@@ -1,6 +1,6 @@
 import { ValidationToolbox } from "./ValidationToolbox";
-import { ValidationOperatorRegistry } from "./ValidationOperatorRegistry";
-import { ValidationRule, ValidatorFn } from "../types";
+import { ValidationOperator, ValidationRule, ValidatorFn } from "../types";
+import { Registry } from "../../core/Registry";
 
 /**
  * The `ValidationEngine` is a core component of the validation system.
@@ -16,13 +16,13 @@ interface ValidationEngine {
 export class DefaultValidationEngine implements ValidationEngine {
   private readonly toolbox: ValidationToolbox;
 
-  private readonly operatorRegistry: ValidationOperatorRegistry;
+  private readonly operatorRegistry: Registry<ValidationOperator>;
 
   private readonly logger: Console;
 
   constructor(
     toolbox: ValidationToolbox,
-    operatorRegistry: ValidationOperatorRegistry,
+    operatorRegistry: Registry<ValidationOperator>,
     logger: Console = console,
   ) {
     this.toolbox = toolbox;

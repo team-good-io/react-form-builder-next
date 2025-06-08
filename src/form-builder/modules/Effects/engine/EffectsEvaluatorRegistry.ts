@@ -1,3 +1,5 @@
+import { Registry } from "../../core/Registry";
+
 export type EvaluatorFunction = (fieldValue: unknown, conditionValue: unknown) => boolean | Promise<boolean>;
 
 function getLength(value: unknown): number | null {
@@ -5,27 +7,7 @@ function getLength(value: unknown): number | null {
   return null;
 }
 
-export class EffectEvaluatorRegistry {
-  private registry: Map<string, EvaluatorFunction> = new Map();
-
-  register(name: string, fn: EvaluatorFunction, override = false): void {
-    if (!override && this.registry.has(name)) {
-      console.error(`Evaluator "${name}" already registered. Use 'override' to replace.`);
-      return;
-    }
-    this.registry.set(name, fn);
-  }
-
-  get(name: string): EvaluatorFunction | undefined {
-    return this.registry.get(name);
-  }
-
-  has(name: string): boolean {
-    return this.registry.has(name);
-  }
-}
-
-export class DefaultEffectEvaluatorRegistry extends EffectEvaluatorRegistry {
+export class DefaultEffectEvaluatorRegistry extends Registry<EvaluatorFunction> {
   constructor(customEvaluators: Record<string, EvaluatorFunction> = {}) {
     super();
     this.registerDefaults();

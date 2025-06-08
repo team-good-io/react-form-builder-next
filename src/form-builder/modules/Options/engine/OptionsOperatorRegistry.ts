@@ -1,28 +1,8 @@
+import { Registry } from "../../core/Registry";
 import { OptionsCommandFactory } from "../types";
 import { RemoteCommand, RemoteDynamicCommand, StaticCommand } from "./operators";
 
-
-export class OptionsOperatorRegistry {
-  private registry: Map<string, OptionsCommandFactory> = new Map();
-
-  register(name: string, operator: OptionsCommandFactory, override = false): void {
-    if (!override && this.registry.has(name)) {
-      console.error(`Operator with name "${name}" is already registered. Use 'override' to replace it.`);
-      return;
-    }
-    this.registry.set(name, operator);
-  }
-
-  get(name: string): OptionsCommandFactory | undefined {
-    return this.registry.get(name);
-  }
-
-  has(name: string): boolean {
-    return this.registry.has(name);
-  }
-}
-
-export class DefaultOptionsOperatorRegistry extends OptionsOperatorRegistry {
+export class DefaultOptionsOperatorRegistry extends Registry<OptionsCommandFactory> {
   constructor(customOperators: Record<string, OptionsCommandFactory> = {}) {
     super();
     this.registerDefaults();

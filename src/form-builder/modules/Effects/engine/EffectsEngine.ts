@@ -1,6 +1,6 @@
-import { EffectAction, EffectCondition, EffectsConfig } from "../types";
-import { EffectsActionsRegistry } from "./EffectsActionsRegistry";
-import { EffectEvaluatorRegistry } from "./EffectsEvaluatorRegistry";
+import { Registry } from "../../core/Registry";
+import { CommandFactory, EffectAction, EffectCondition, EffectsConfig } from "../types";
+import { EvaluatorFunction } from "./EffectsEvaluatorRegistry";
 import { EffectsToolbox } from "./EffectsToolbox";
 
 interface EffectsEngine {
@@ -13,9 +13,9 @@ export class DefaultEffectsEngine implements EffectsEngine {
 
   private readonly toolbox: EffectsToolbox;
 
-  private readonly evaluators: EffectEvaluatorRegistry;
+  private readonly evaluators: Registry<EvaluatorFunction>;
 
-  private readonly actions: EffectsActionsRegistry;
+  private readonly actions: Registry<CommandFactory>;
 
   private dependencies: string[] = [];
   private actionQueue: EffectAction[] = [];
@@ -24,8 +24,8 @@ export class DefaultEffectsEngine implements EffectsEngine {
   constructor(
     config: EffectsConfig,
     toolbox: EffectsToolbox,
-    evaluators: EffectEvaluatorRegistry,
-    actions: EffectsActionsRegistry
+    evaluators: Registry<EvaluatorFunction>,
+    actions: Registry<CommandFactory>
   ) {
     this.config = config;
     this.toolbox = toolbox;
