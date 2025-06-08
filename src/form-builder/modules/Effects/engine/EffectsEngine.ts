@@ -138,12 +138,13 @@ export class DefaultEffectsEngine implements EffectsEngine {
     }
   }
 
-  private executeAction(action: EffectAction) {
-    const actionFn = this.actions.get(action.type);
-    if (!actionFn) {
+  private async executeAction(action: EffectAction) {
+    const factory = this.actions.get(action.type);
+    if (!factory) {
       console.error(`Unknown action: ${JSON.stringify(action)}`);
       return;
     }
-    actionFn.execute(action);
+    const command = factory(this.toolbox, action);
+    await command.execute();
   };
 }

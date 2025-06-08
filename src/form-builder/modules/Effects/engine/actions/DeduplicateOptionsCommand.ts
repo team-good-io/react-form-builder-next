@@ -1,20 +1,25 @@
-import { EffectAction, EffectOperator } from "../../types";
+import { EffectAction, EffectCommand } from "../../types";
 import { EffectsToolbox } from "../EffectsToolbox";
 
-export class DeduplicateOptionsOperator implements EffectOperator {
+export class DeduplicateOptionsCommand implements EffectCommand {
   public readonly toolbox: EffectsToolbox;
+  public readonly action: EffectAction;
 
-  constructor(toolbox: EffectsToolbox) {
+  constructor(
+    toolbox: EffectsToolbox,
+    action: EffectAction
+  ) {
     this.toolbox = toolbox;
+    this.action = action;
   }
 
-  async execute(action: EffectAction) {
+  async execute() {
     const values = this.toolbox.form.getValues();
     const options = this.toolbox.options.getOptions();
 
-    const selectedValues = action.targets.map(field => values[field]).filter(Boolean);
+    const selectedValues = this.action.targets.map(field => values[field]).filter(Boolean);
 
-    action.targets.forEach(targetField => {
+    this.action.targets.forEach(targetField => {
       const fieldOptions = options.get(targetField);
 
       if (!fieldOptions || !fieldOptions.data) {

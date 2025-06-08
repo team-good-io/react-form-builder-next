@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { EffectOperator, EffectsConfig, EffectState } from "../types";
+import { CommandFactory, EffectsConfig, EffectState } from "../types";
 import { DefaultEffectsToolbox } from "../engine/EffectsToolbox";
 import { useFormContext } from "react-hook-form";
 import { bindMethods } from "../../../utils/bindMethods";
@@ -13,7 +13,7 @@ import { DefaultEffectsEngine } from "../engine/EffectsEngine";
 interface EffectsProviderProps {
   config: EffectsConfig;
   customEvaluators?: Record<string, EvaluatorFunction>;
-  customActions?: Record<string, EffectOperator>;
+  customActions?: Record<string, CommandFactory>;
   children: React.ReactNode;
 }
 
@@ -33,8 +33,8 @@ export function EffectsProvider({ config, customEvaluators, customActions, child
     [customEvaluators]
   );
   const actions = useMemo(
-    () => new DefaultEffectsActionsRegistry(toolbox, customActions),
-    [toolbox, customActions]
+    () => new DefaultEffectsActionsRegistry(customActions),
+    [customActions]
   );
   const engine = useMemo(
     () => new DefaultEffectsEngine(config, toolbox, evaluators, actions),

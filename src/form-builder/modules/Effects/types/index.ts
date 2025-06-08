@@ -3,6 +3,7 @@
  */
 
 import { OptionsState } from "../../Options/types";
+import { EffectsToolbox } from "../engine/EffectsToolbox";
 
 
 export interface EffectState {
@@ -64,25 +65,12 @@ export type EffectRule = {
  */
 export type EffectsConfig = EffectRule[];
 
-/**
- * Toolbox provided to effect engine for performing actions
- */
-export interface EffectsToolbox {
-  watch: (callback: (values: Record<string, unknown>, info: { name?: string }) => void) => { unsubscribe: () => void };
-  getValues: () => Record<string, unknown>;
-  getOptions: () => Map<string, OptionsState>;
-  setValue: (name: string, value: unknown) => void;
-  resetField: (name: string) => void;
-  clearErrors: (name: string) => void;
-  publish: (name: string, state: EffectState) => void;
-  merge: (name: string, state: EffectState) => void;
-  // Future: add showField / hideField hooks here for full future-proofing
-}
-
 export type EffectFn = (
   action: EffectAction,
 ) => void | Promise<void>;
 
-export interface EffectOperator {
-  execute: EffectFn;
+export interface EffectCommand {
+  execute(): Promise<void>;
 }
+
+export type CommandFactory = (toolbox: EffectsToolbox, action: EffectAction) => EffectCommand;
