@@ -46,17 +46,6 @@ export interface OptionsToolbox {
   publish: (name: string, data: OptionsState) => void;
 }
 
-export type OptionsFn = (
-  sourceName: string,
-  values: Record<string, unknown>,
-  config: OptionsConfig,
-  publish: (name: string, data: OptionsState) => void
-) => void | Promise<void>;
-
-export interface OptionsOperator {
-  execute: OptionsFn;
-}
-
 export interface OptionsCommand {
   execute(): void | Promise<void>;
 }

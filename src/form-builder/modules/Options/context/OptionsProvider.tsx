@@ -1,5 +1,5 @@
 import { JSX, useEffect, useMemo } from "react";
-import { OptionsConfig, OptionsOperator, OptionsState } from "../types";
+import { OptionsCommandFactory, OptionsConfig, OptionsState } from "../types";
 import { OptionsContext, OptionsContextProps } from "./OptionsContext";
 import { bindMethods } from "../../../utils/bindMethods";
 import { PubSubState } from "../../../services/pubSub/PubSubState";
@@ -10,7 +10,7 @@ import { useFormContext } from "react-hook-form";
 
 interface OptionsProviderProps {
   config: OptionsConfig;
-  customOperators?: Record<string, OptionsOperator>;
+  customOperators?: Record<string, OptionsCommandFactory>;
   children: React.ReactNode;
 }
 

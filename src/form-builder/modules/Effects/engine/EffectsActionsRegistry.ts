@@ -1,6 +1,5 @@
-import { CommandFactory, EffectAction } from "../types";
+import { CommandFactory } from "../types";
 import { SetValueCommand, ClearErrorsCommand, DeduplicateOptionsCommand, HideFieldCommand, ResetFieldCommand, SetFieldPropsCommand, SetRegisterPropsCommand, ShowFieldCommand } from "./actions";
-import { EffectsToolbox } from "./EffectsToolbox";
 
 export class EffectsActionsRegistry {
   private registry: Map<string, CommandFactory> = new Map();
