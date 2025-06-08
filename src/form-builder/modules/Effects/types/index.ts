@@ -35,19 +35,16 @@ export type CompositeCondition =
 export type EffectCondition = SimpleCondition | CompositeCondition;
 
 /**
- * EffectAction types
+ * EffectAction
  * - `skipOnInit`: skip actions on init to avoid overriding initial values
  */
 
-export type EffectAction =
-  | { type: 'setValue'; targets: string[]; value: unknown; skipOnInit?: boolean }
-  | { type: 'setRegisterProps'; targets: string[]; value: Record<string, unknown>; skipOnInit?: boolean }
-  | { type: 'resetField'; targets: string[]; skipOnInit?: boolean }
-  | { type: 'showField'; targets: string[]; skipOnInit?: boolean }
-  | { type: 'hideField'; targets: string[]; skipOnInit?: boolean }
-  | { type: 'clearErrors'; targets: string[]; skipOnInit?: boolean }
-  | { type: 'setFieldProps'; targets: string[]; value: Record<string, unknown>; skipOnInit?: boolean }
-  | { type: 'deduplicateOptions'; targets: string[]; skipOnInit?: boolean }
+export type EffectAction = {
+  type: string;
+  targets: string[];
+  value?: unknown;
+  skipOnInit?: boolean;
+}
 
 /**
  * Single effect rule

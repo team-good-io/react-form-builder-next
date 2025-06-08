@@ -20,7 +20,7 @@ export class SetFieldPropsCommand implements EffectCommand {
     }
     
     this.action.targets.forEach(target => {
-      this.toolbox.state.merge(target, {fieldProps: this.action.value });
+      this.toolbox.state.merge(target, {fieldProps: this.action.value as Record<string, unknown> });
     })
   }
 }
