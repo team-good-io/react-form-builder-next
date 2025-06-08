@@ -30,14 +30,14 @@ export class DefaultEffectsActionsRegistry extends EffectsActionsRegistry {
   }
 
   private registerDefaults(): void {
-    this.register("setValue", (toolbox: EffectsToolbox, action: EffectAction) => new SetValueCommand(toolbox, action));
-    this.register("resetField", (toolbox: EffectsToolbox, action: EffectAction) => new ResetFieldCommand(toolbox, action));
-    this.register("clearErrors", (toolbox: EffectsToolbox, action: EffectAction) => new ClearErrorsCommand(toolbox, action));
-    this.register("setFieldProps", (toolbox: EffectsToolbox, action: EffectAction) => new SetFieldPropsCommand(toolbox, action));
-    this.register("setRegisterProps", (toolbox: EffectsToolbox, action: EffectAction) => new SetRegisterPropsCommand(toolbox, action));
-    this.register("showField", (toolbox: EffectsToolbox, action: EffectAction) => new ShowFieldCommand(toolbox, action));
-    this.register("hideField", (toolbox: EffectsToolbox, action: EffectAction) => new HideFieldCommand(toolbox, action));
-    this.register("deduplicateOptions", (toolbox: EffectsToolbox, action: EffectAction) => new DeduplicateOptionsCommand(toolbox, action));
+    this.register("setValue", (toolbox, action) => new SetValueCommand(toolbox, action));
+    this.register("resetField", (toolbox, action) => new ResetFieldCommand(toolbox, action));
+    this.register("clearErrors", (toolbox, action) => new ClearErrorsCommand(toolbox, action));
+    this.register("setFieldProps", (toolbox, action) => new SetFieldPropsCommand(toolbox, action));
+    this.register("setRegisterProps", (toolbox, action) => new SetRegisterPropsCommand(toolbox, action));
+    this.register("showField", (toolbox, action) => new ShowFieldCommand(toolbox, action));
+    this.register("hideField", (toolbox, action) => new HideFieldCommand(toolbox, action));
+    this.register("deduplicateOptions", (toolbox, action) => new DeduplicateOptionsCommand(toolbox, action));
   }
 
   private registerCustomActions(custom: Record<string, CommandFactory>): void {

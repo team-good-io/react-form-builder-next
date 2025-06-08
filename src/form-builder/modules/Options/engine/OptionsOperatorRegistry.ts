@@ -1,12 +1,11 @@
-import { OptionsOperator } from "../types";
-import { RemoteDynamicOperator } from "./operators/RemoteDynamicOperator";
-import { RemoteOperator } from "./operators/RemoteOperator";
-import { StaticOperator } from "./operators/StaticOperator";
+import { OptionsCommandFactory } from "../types";
+import { RemoteCommand, RemoteDynamicCommand, StaticCommand } from "./operators";
+
 
 export class OptionsOperatorRegistry {
-  private registry: Map<string, OptionsOperator> = new Map();
+  private registry: Map<string, OptionsCommandFactory> = new Map();
 
-  register(name: string, operator: OptionsOperator, override = false): void {
+  register(name: string, operator: OptionsCommandFactory, override = false): void {
     if (!override && this.registry.has(name)) {
       console.error(`Operator with name "${name}" is already registered. Use 'override' to replace it.`);
       return;
@@ -14,7 +13,7 @@ export class OptionsOperatorRegistry {
     this.registry.set(name, operator);
   }
 
-  get(name: string): OptionsOperator | undefined {
+  get(name: string): OptionsCommandFactory | undefined {
     return this.registry.get(name);
   }
 
@@ -24,19 +23,19 @@ export class OptionsOperatorRegistry {
 }
 
 export class DefaultOptionsOperatorRegistry extends OptionsOperatorRegistry {
-  constructor(customOperators: Record<string, OptionsOperator> = {}) {
+  constructor(customOperators: Record<string, OptionsCommandFactory> = {}) {
     super();
     this.registerDefaults();
     this.registerCustomOperators(customOperators);
   }
 
   private registerDefaults(): void {
-    this.register('static', new StaticOperator());
-    this.register('remote', new RemoteOperator());
-    this.register('remote-dynamic', new RemoteDynamicOperator())
+    this.register('static', (sourceName, _values, config, toolbox) => new StaticCommand(sourceName, config, toolbox));
+    this.register('remote', (sourceName, _values, config, toolbox) => new RemoteCommand(sourceName, config, toolbox));
+    this.register('remote-dynamic', (sourceName, values, config, toolbox) => new RemoteDynamicCommand(sourceName, values, config, toolbox));
   }
 
-  private registerCustomOperators(custom: Record<string, OptionsOperator>): void {
+  private registerCustomOperators(custom: Record<string, OptionsCommandFactory>): void {
     for (const [name, operator] of Object.entries(custom)) {
       this.register(name, operator);
     }

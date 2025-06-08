@@ -56,3 +56,14 @@ export type OptionsFn = (
 export interface OptionsOperator {
   execute: OptionsFn;
 }
+
+export interface OptionsCommand {
+  execute(): void | Promise<void>;
+}
+
+export type OptionsCommandFactory = (
+  sourceName: string,
+  values: Record<string, unknown>,
+  config: OptionsConfig,
+  toolbox: OptionsToolbox
+) => OptionsCommand;

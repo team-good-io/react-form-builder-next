@@ -46,6 +46,12 @@ export type EffectAction = {
   skipOnInit?: boolean;
 }
 
+export interface EffectCommand {
+  execute(): Promise<void>;
+}
+
+export type CommandFactory = (toolbox: EffectsToolbox, action: EffectAction) => EffectCommand;
+
 /**
  * Single effect rule
  * - `when`: conditions to trigger
@@ -61,13 +67,3 @@ export type EffectRule = {
  * Full effects configuration array
  */
 export type EffectsConfig = EffectRule[];
-
-export type EffectFn = (
-  action: EffectAction,
-) => void | Promise<void>;
-
-export interface EffectCommand {
-  execute(): Promise<void>;
-}
-
-export type CommandFactory = (toolbox: EffectsToolbox, action: EffectAction) => EffectCommand;

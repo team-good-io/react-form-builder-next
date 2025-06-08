@@ -15,7 +15,7 @@ export class DefaultOptionsEngine implements OptionsEngine {
   private readonly operators: OptionsOperatorRegistry;
 
   private dependencies: string[] = [];
-  
+
   constructor(
     config: OptionsConfig,
     toolbox: OptionsToolbox,
@@ -30,16 +30,9 @@ export class DefaultOptionsEngine implements OptionsEngine {
 
   public run(): void {
     const formValues = this.toolbox.getFormValues();
-    
-    Object.entries(this.config).forEach(([sourceName, sourceConfig]) => {
-      const { type } = sourceConfig;
-      const operator = this.operators.get(type);
-      if(!operator) {
-        console.warn(`No operator found for type: ${type}`);
-        return;
-      }
-      operator.execute(sourceName, formValues, this.config, this.toolbox.publish);
-      // this.operators[type](sourceName, formValues);
+
+    Object.keys(this.config).forEach(sourceName => {
+      this.runCommandForSource(sourceName, formValues);
     });
   }
 
@@ -54,28 +47,39 @@ export class DefaultOptionsEngine implements OptionsEngine {
   }
 
   private onDepsChange(changedFields: string[], formValues: Record<string, unknown>) {
-      Object.entries(this.config).forEach(([sourceName, sourceConfig]) => {
-        if (!sourceConfig.dependencies?.length) return;
-  
-        const isImpacted = sourceConfig.dependencies.some((dep) => changedFields.includes(dep));
-        if (!isImpacted) return;
-  
-        const operator = this.operators.get(sourceConfig.type);
-        if (!operator) {
-          console.warn(`No operator found for type: ${sourceConfig.type}`);
-          return;
-        }
-        operator.execute(sourceName, formValues, this.config, this.toolbox.publish);
-        // this.operators[OptionsSourceType.REMOTE_DYNAMIC](sourceName, formValues);
-      });
+    Object.entries(this.config).forEach(([sourceName, sourceConfig]) => {
+      if (!sourceConfig.dependencies?.length) return;
+
+      const isImpacted = sourceConfig.dependencies.some((dep) => changedFields.includes(dep));
+      if (!isImpacted) return;
+
+      this.runCommandForSource(sourceName, formValues);
+    });
+  }
+
+  private runCommandForSource(sourceName: string, formValues: Record<string, unknown>) {
+    const sourceConfig = this.config[sourceName];
+
+    try {
+      const factory = this.operators.get(sourceConfig.type);
+      if (!factory) {
+        console.warn(`No operator found for type: ${sourceConfig.type}`);
+        return;
+      }
+
+      const command = factory(sourceName, formValues, this.config, this.toolbox);
+      command.execute();
+    } catch (error) {
+      console.error(`Error executing operator for source "${sourceName}":`, error);
     }
-  
-    private getDependencies(): string[] {
-      return Array.from(new Set(
-        Object.values(this.config)
-          .filter((source) => source.dependencies && source.dependencies.length > 0)
-          .flatMap((source) => source.dependencies)
-          .filter((dep): dep is string => typeof dep === "string"),
-      ));
-    }
+  }
+
+  private getDependencies(): string[] {
+    return Array.from(new Set(
+      Object.values(this.config)
+        .filter((source) => source.dependencies && source.dependencies.length > 0)
+        .flatMap((source) => source.dependencies)
+        .filter((dep): dep is string => typeof dep === "string"),
+    ));
+  }
 }
