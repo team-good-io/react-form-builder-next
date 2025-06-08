@@ -3,7 +3,7 @@ import { OptionsSourceType } from "../../form-builder/modules/Options/types";
 import { FormConfig } from "../../form-builder/types";
 
 export const config: FormConfig = {
-  template: {name: "signup"},
+  template: undefined,
   fields: [
     {
       name: "USERNAME",

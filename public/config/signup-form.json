@@ -1,0 +1,18 @@
+{
+  "fields": [
+    {
+      "name": "USERNAME",
+      "type": "text",
+      "registerProps": {
+        "required": true
+      }
+    },
+    {
+      "name": "PASSWORD",
+      "type": "password",
+      "registerProps": {
+        "required": true
+      }
+    }
+  ]
+}

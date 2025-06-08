@@ -4,7 +4,7 @@ export const config: FlowBuilderProps = {
   defaultValues: {},
   steps: [
     {
-      template: { name: "multiform" },
+      template: undefined,
       fields: [
         {
           name: "FIRSTNAME",
@@ -34,11 +34,11 @@ export const config: FlowBuilderProps = {
     },
     {
       type: "promo",
-      template: { name: "multiform" },
+      template: undefined,
       fields: []
     },
     {
-      template: { name: "multiform" },
+      template: undefined,
       fields: [
         {
           name: "EMAIL",

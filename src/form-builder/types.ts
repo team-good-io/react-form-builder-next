@@ -1,7 +1,5 @@
 import { OptionsConfig } from "./modules/Options";
 import { EffectsConfig } from "./modules/Effects";
-import { templateMap } from "./templates";
-import { ValidationFactoryFn } from "./modules/Validation";
 
 export interface Option<T = unknown> {
   label: string;
@@ -19,13 +17,13 @@ export interface FieldConfig {
 
 export type FormConfig = {
   type?: "form" | "promo";
-  template: { name: keyof typeof templateMap, params?: Record<string, unknown> };
+  template?: React.ComponentType<{ config?: Record<string, unknown>; children: React.ReactNode; }>;
+  templateConfig?: Record<string, unknown>;
   meta?: Record<string, unknown>;
   fields: FieldConfig[];
   defaultValues?: Record<string, unknown>;
   optionsConfig?: OptionsConfig;
   effectsConfig?: EffectsConfig;
-  validationOperators?:  Record<string, ValidationFactoryFn>;
   onValid?(values?: Record<string, unknown>): void;
   onInvalid?(): void;
 }

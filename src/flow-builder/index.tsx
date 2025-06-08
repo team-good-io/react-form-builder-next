@@ -60,9 +60,9 @@ export function FlowBuilder({
   }, [values]);
 
   const stepTemplate = useMemo(() => ({
-    name: activeStep.template.name,
+    // name: activeStep.template.name,
     params: {
-      ...activeStep.template.params,
+      // ...activeStep.template.params,
       activeStepIndex,
       isFirstStep: activeStepIndex === 0,
       isLastStep,
@@ -87,7 +87,7 @@ export function FlowBuilder({
       optionsConfig={activeStep.optionsConfig}
       effectsConfig={activeStep.effectsConfig}
       onValid={handleNextStep}
-      template={stepTemplate}
+      // template={stepTemplate}
       fields={activeStep.fields}
     />
   )

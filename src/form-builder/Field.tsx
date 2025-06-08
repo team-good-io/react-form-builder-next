@@ -6,10 +6,10 @@ import { ValidationCheckList } from "./components/ValidationCheckList";
 import { useResolvedFieldConfig } from "./hooks/useResolvedFieldConfig";
 
 const fieldMap: Record<string, ComponentType<FieldConfig & {error?: string}>> = {
-  select: lazy(() => import('../ui/SelectField/SelectField')),
-  radio: lazy(() => import('../ui/RadioField/RadioField')),
-  text: lazy(() => import('../ui/TextField/TextField')),
-  password: lazy(() => import('../ui/PasswordField/PasswordField')),
+  select: lazy(() => import('../ui-component-library/form/SelectField/SelectField')),
+  radio: lazy(() => import('../ui-component-library/form/RadioField/RadioField')),
+  text: lazy(() => import('../ui-component-library/form/TextField/TextField')),
+  password: lazy(() => import('../ui-component-library/form/PasswordField/PasswordField')),
 };
 
 export function Field(props: FieldConfig) {

@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { Form } from "../../form-builder/Form";
-import { SignupTemplate } from "../../ui-component-library/templates/SignupTemplate";
+import { LoginTemplate } from "../../ui-component-library/templates/LoginTemplate";
 import { FormConfig } from "../../form-builder/types";
 
-export function SignupForm() {
+export function LoginForm() {
   const [formConfig, setFormConfig] = useState<FormConfig | null>(null);
 
   useEffect(() => {
     const fetchConfig = async () => {
       try {
-        const res = fetch('/config/signup-form.json')
+        const res = fetch('/config/login-form.json')
         const config = await (await res).json();
         setFormConfig(config);
       } catch (error) {
@@ -28,7 +28,7 @@ export function SignupForm() {
   return (
     <Form
       fields={formConfig.fields}
-      template={SignupTemplate}
+      template={LoginTemplate}
       onValid={(values) => console.log('Form submitted with values:', values)}
       onInvalid={() => console.error('Form validation errors')}
     />
